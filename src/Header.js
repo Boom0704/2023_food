@@ -5,9 +5,10 @@ import Page from './Page';
 import SignUp from './SignUp';
 import Writing from './Writing';
 import ball from './img/ball.jpeg';
+// import 
 
 const Header = () => (
-    <div>
+    <div className="Header">
         <div className="logo">
             <img src={ball} />
         </div>
@@ -27,7 +28,7 @@ const Header = () => (
         </div>
 
         <Routes>
-            <Route path="/" element={<div>홈</div>} />
+            <Route path="/" element={<div>Home</div>} />
             <Route path="/Info" element={<Info />} />
             <Route path="/Page" element={<Page />} />
             <Route path="/SignUp" element={<SignUp />} />
