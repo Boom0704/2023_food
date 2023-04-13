@@ -1,17 +1,19 @@
-import { BrowserRouter as Routers, Router, Route } from 'react-router-dom';
 import Category from './Category';
 
-function App() {
-  return (
-    <Router>
-        <Route path="/Korean" render={() => <Category foodType="Korean" />} />
-        <Route path="/Chinese" render={() => <Category foodType="Chinese" />} />
-        <Route path="/West" render={() => <Category foodType="West" />} />
-        <Route path="/Japan" render={() => <Category foodType="Japan" />} />
-        <Route path="/Dessert" render={() => <Category foodType="Dessert" />} />
-        <Route component={() => <div>ERROR</div>} />
-    </Router>
-  );
+function App({ selectedPage }) {
+  if (selectedPage === 'Korean') {
+    return <Category foodType={selectedPage}/>;
+  } else if (selectedPage === 'Chinese') {
+    return <Category foodType={selectedPage}/>;
+  } else if (selectedPage === 'West') {
+    return <Category foodType={selectedPage}/>;
+  } else if (selectedPage === 'Japan') {
+    return <Category foodType={selectedPage}/>;
+  } else if (selectedPage === 'Dessert') {
+    return <Category foodType={selectedPage}/>;
+  } else {
+    return <div>ERROR</div>;
+  }
 }
 
 export default App;
