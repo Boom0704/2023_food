@@ -1,39 +1,29 @@
 import React from 'react';
 import { Routes, Route, Link } from 'react-router-dom'
-import Info from './Info';
-import Page from './Page';
-import SignUp from './SignUp';
-import Writing from './Writing';
 import ball from './img/ball.jpeg';
-// import 
+import "./css/Header.css";
+import "./css/reset.css";
 
-const Header = () => (
+const Header = ( {onSelectPage} ) => (
     <div className="Header">
         <div className="logo">
             <img src={ball} />
         </div>
         <div>
-            
             <div className="find">
-                <input placeholder="find .." />
+                <input className='find_input' placeholder="find .." />
             </div>
-            <button>Button</button>
+            <button className='find_btn'>Button</button>
         </div>
-        <div>
-            <Link to="/">Home</Link>
-            <Link to="/Info">1</Link>
-            <Link to="/Page">2</Link>
-            <Link to="/SignUp">3</Link>
-            <Link to="/Writing">4</Link>
-        </div>
-
-        <Routes>
-            <Route path="/" element={<div>Home</div>} />
-            <Route path="/Info" element={<Info />} />
-            <Route path="/Page" element={<Page />} />
-            <Route path="/SignUp" element={<SignUp />} />
-            <Route path="/Writing" element={<Writing />} />
-        </Routes>
+        <nav className='nav_bar'>
+        <ul>
+          <li><a href="#" onClick={() => onSelectPage('Korean')}>한식</a></li>
+          <li><a href="#" onClick={() => onSelectPage('Chinese')}>중식</a></li>
+          <li><a href="#" onClick={() => onSelectPage('West')}>양식</a></li>
+          <li><a href="#" onClick={() => onSelectPage('Japan')}>일식</a></li>
+          <li><a href="#" onClick={() => onSelectPage('Dessert')}>디저트</a></li>
+        </ul>
+      </nav>
     </div>
 );
 

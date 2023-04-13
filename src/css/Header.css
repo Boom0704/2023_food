@@ -1,3 +1,44 @@
 .Header {
-  
+  width: 100%;
+  height: 150px;
+  background-color: pink;
+  padding-left: 0.5rem;
+  margin-left: 0.5rem;
+}
+
+.Header div {
+  display: inline-block;
+}
+
+.logo img {
+  width: 85px;
+  height: 80px;
+}
+
+.find {
+  display: inline-block;
+}
+
+.find_input {
+  width: 300px;
+  height: 30px;
+}
+
+.find_btn {
+  display: inline-block;
+  width: 50px;
+  height: 30px;
+}
+
+li {
+  display: inline-block;
+}
+
+li a {
+  font-size: 30px;
+  margin: 0px 10px;
+}
+
+.nav_bar {
+  background-color: green;
 }
