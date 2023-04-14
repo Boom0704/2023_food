@@ -1,0 +1,30 @@
+.card {
+  background-color: cornflowerblue;
+  display: inline-block;
+  margin: 1% 2.5%;
+  width: 20%;
+}
+
+.preview_img {
+  width: 100%;
+}
+
+.user_profile_img {
+  width: 40px;
+  height: 40px;
+  border-radius: 20px;
+  display: inline-block;
+}
+
+.icon_like {
+  display: inline-block;
+  padding: 10px;
+}
+
+.icon_view {
+  display: inline-block;
+  padding: 10px;
+}
+
+
+

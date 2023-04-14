@@ -7,15 +7,17 @@ import Aside from './Aside';
 
 function Root() {
   const [selectedPage, setSelectedPage] = useState('Korean');
+  const [loginState, setLoginState] = useState("true");
 
   return (
     <BrowserRouter>
       <Header onSelectPage={setSelectedPage} />
-      <Aside />
+      <Aside loginState={loginState} onLoginState={setLoginState} />  {/* 로그인 상태 변경 함수 */}
       <App selectedPage={selectedPage} />
     </BrowserRouter>
   );
 }
+
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(<Root />);
