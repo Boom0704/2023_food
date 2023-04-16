@@ -22,6 +22,7 @@ const Header = ( {onSelectPage} ) => (
           <li><a href="#" onClick={() => onSelectPage('West')}>양식</a></li>
           <li><a href="#" onClick={() => onSelectPage('Japan')}>일식</a></li>
           <li><a href="#" onClick={() => onSelectPage('Dessert')}>디저트</a></li>
+          <li><a href="#" onClick={() => onSelectPage('Writing')}>글쓰기</a></li>
         </ul>
       </nav>
     </div>

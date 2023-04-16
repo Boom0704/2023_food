@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import "./css/Aside.css";
+import SignUp from './SignUp';
 
-function LoginAside({ loginState, onLoginState }) {
+function LoginAside({ loginState, onLoginState, onSelectPage }) {
   
   const [id, setId] = useState('');
   const [password, setPassword] = useState('');
@@ -12,6 +13,10 @@ function LoginAside({ loginState, onLoginState }) {
     onLoginState(data);
   }
 
+  const handleSignUp = (event) => {
+    event.preventDefault();
+    onSelectPage("SignUp");
+  }
 
   return (
     <aside>
@@ -28,13 +33,11 @@ function LoginAside({ loginState, onLoginState }) {
         </label>
         <br />
         <button className='login_btn' onClick={handleLogin}>로그인</button>
-        <button className='signUp_btn'>회원가입</button>
-    
+        <button className='signUp_btn' onClick={handleSignUp}>회원가입</button>
       </form>
     </aside>
   );
 }
-
 
 
 function UserAside( {loginState, onLoginState} ) {
@@ -59,11 +62,11 @@ function UserAside( {loginState, onLoginState} ) {
     );
 }
 
-function Aside({loginState, onLoginState}) {
+function Aside({loginState, onLoginState, onSelectPage}) {
   return (
     <>
       {
-      loginState == false ? <LoginAside loginState={loginState} onLoginState={onLoginState}/> : <UserAside loginState={loginState} onLoginState={onLoginState}/>
+      loginState == false ? <LoginAside loginState={loginState} onLoginState={onLoginState} onSelectPage={onSelectPage}/> : <UserAside loginState={loginState} onLoginState={onLoginState}/>
       }
     </>
   );

@@ -12,8 +12,8 @@ function Root() {
   return (
     <BrowserRouter>
       <Header onSelectPage={setSelectedPage} />
-      <Aside loginState={loginState} onLoginState={setLoginState} />  {/* 로그인 상태 변경 함수 */}
-      <App selectedPage={selectedPage} />
+      <Aside loginState={loginState} onLoginState={setLoginState} onSelectPage={setSelectedPage} />  {/* 로그인 상태 변경 함수 */}
+      <App selectedPage={selectedPage} onSelectPage={setSelectedPage} /> {/* 페이지 이동 */}
     </BrowserRouter>
   );
 }
