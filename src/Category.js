@@ -130,6 +130,10 @@ function Category( {foodType} ) {
       <div>
         <div>음식 종류 : {foodType}</div>
         {data.map(x => <Writing_Card info = {x}/> )}
+        <div> PAGE 번호 </div>
+        <div>
+          <button>글쓰기</button>
+        </div>
       </div>
     );
   }

@@ -7,8 +7,8 @@ import Aside from './Aside';
 
 function Root() {
   const [selectedPage, setSelectedPage] = useState('Korean');
-  const [loginState, setLoginState] = useState("true");
-
+  const [loginState, setLoginState] = useState(false);
+  
   return (
     <BrowserRouter>
       <Header onSelectPage={setSelectedPage} />
