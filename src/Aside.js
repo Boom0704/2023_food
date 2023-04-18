@@ -1,16 +1,28 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import "./css/Aside.css";
 import SignUp from './SignUp';
+import Fire from './Fire';
 
-function LoginAside({ loginState, onLoginState, onSelectPage }) {
-  
+function LoginAside({ onLoginState, onSelectPage }) {
   const [id, setId] = useState('');
   const [password, setPassword] = useState('');
+  const { data, db } = Fire('User');
 
   const handleLogin = (event) => {
-    event.preventDefault(); // submit 기본 동작 방지
-    const data = LoginCheck(id, password);
-    onLoginState(data);
+    event.preventDefault();
+    try {
+      const userData = data.find((user) => user.userID === id && user.password === password);
+      
+      if (userData == undefined) {
+        alert("아이디와 비번 확인");
+      } else {
+        onLoginState(userData);
+      }
+      
+    } catch (error) {
+      console.log('로그인 실패ss');
+      alert('로그인에 실패했습니다.');
+    }
   }
 
   const handleSignUp = (event) => {
@@ -41,71 +53,36 @@ function LoginAside({ loginState, onLoginState, onSelectPage }) {
 
 
 function UserAside( {loginState, onLoginState} ) {
-  
   const handleLogOut = (event) => {
-    event.preventDefault(); // submit 기본 동작 방지
+    event.preventDefault();
     onLoginState(false);
   }
 
   return (
-        <aside>
-        <h2>유저 정보</h2>
-        <ul>
-          <li>아이디: {loginState.userId}</li>
-          <li>닉네임: {loginState.nickname}</li>
-          <li>레벨: {loginState.level}</li>
-          <li>포인트: {loginState.point}</li>
-          <li>상세메시지: {loginState.status}</li>
-        </ul>
-        <button className='logout_btn' onClick={handleLogOut}>로그아웃</button>
-        </aside>
-    );
+    <aside>
+      <h2>유저 정보</h2>
+      <ul>
+        <li>아이디: {loginState.userID}</li> <br/>
+        <li>닉네임: {loginState.nickname}</li> <br/>
+        <li>레벨: {loginState.level}</li> <br/>
+        <li>포인트: {loginState.point}</li> <br/>
+        <li>상세메시지: {loginState.status}</li>
+      </ul>
+      <button className='logout_btn' onClick={handleLogOut}>로그아웃</button>
+    </aside>
+  );
 }
 
 function Aside({loginState, onLoginState, onSelectPage}) {
   return (
     <>
-      {
-      loginState == false ? <LoginAside loginState={loginState} onLoginState={onLoginState} onSelectPage={onSelectPage}/> : <UserAside loginState={loginState} onLoginState={onLoginState}/>
-      }
+      {loginState == false ? (
+        <LoginAside onLoginState={onLoginState} onSelectPage={onSelectPage} />
+      ) : (
+        <UserAside loginState={loginState} onLoginState={onLoginState} />
+      )}
     </>
   );
-}
-
-function LoginCheck(ID, password) {
-  const data = [
-    {
-      ID : 0,
-      userId : "a",
-      nickname : "나 오목돈 몇달 ,, ㅠ ",
-      password : "a",
-      pic : 1200,
-      status : "옷 사고 싶당",
-      level : "Lv.1",
-      point : "2300"
-    },
-    {
-      ID : 1,
-      userId : "장뚜방",
-      nickname : "나 오목돈 몇달 ,, ㅠ ",
-      password : "abc123",
-      pic : 1200,
-      status : "옷 사고 싶당",
-      level : "Lv.1",
-      point : "2500"
-    }
-  ];
-
-  const userData = data.find((user) => user.userId === ID && user.password === password);
-  
-  if (userData) {
-    // 로그인 성공
-    return data.filter(x => x.userId === ID);
-  } else {
-    // 로그인 실패
-    console.log('로그인 실패');
-    return alert("실패");
-  }
 }
 
 export default Aside;

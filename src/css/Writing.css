@@ -35,6 +35,7 @@ select {
   height: 300px;
   margin: 30px 30px;
   font-size: 18px;
+  resize: none;
 }
 
 .ok_btn {

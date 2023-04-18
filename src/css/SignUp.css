@@ -4,5 +4,7 @@
 
 
 .user_status {
-  width: 150px;
+  width: 250px;
+  font-size: 18px;
+  resize: none;
 }
