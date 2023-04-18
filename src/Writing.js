@@ -1,6 +1,6 @@
 import { useState } from "react";
 import "./css/Writing.css";
-import Fire from "./Fire";
+import Fire from "./Components/Fire";
 import { setSelectionRange } from "@testing-library/user-event/dist/utils";
 import { addDoc, collection } from 'firebase/firestore';
 

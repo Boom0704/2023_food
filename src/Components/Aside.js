@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import "./css/Aside.css";
-import SignUp from './SignUp';
+import "../css/Aside.css";
+import SignUp from '../SignUp';
 import Fire from './Fire';
 
 function LoginAside({ onLoginState, onSelectPage }) {

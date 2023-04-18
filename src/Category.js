@@ -1,7 +1,7 @@
 import img_1 from './img/1.jpeg';
 import "./css/Category.css";
 import { useState } from 'react';
-import Fire from './Fire';
+import Fire from './Components/Fire';
 
 function Category( {foodType, onSelectPage} ) {
   const { data, db } = Fire("Post");

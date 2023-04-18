@@ -8,7 +8,7 @@ function App({ selectedPage, onSelectPage }) {
     return <Category foodType={selectedPage} onSelectPage={onSelectPage} />;
   } else if (selectedPage === 'Chinese') {
     return <Category foodType={selectedPage} onSelectPage={onSelectPage} />;
-  } else if (selectedPage === 'West') {
+  } else if (selectedPage === 'Western') {
     return <Category foodType={selectedPage} onSelectPage={onSelectPage} />;
   } else if (selectedPage === 'Japan') {
     return <Category foodType={selectedPage} onSelectPage={onSelectPage} />;

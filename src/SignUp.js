@@ -1,6 +1,6 @@
 import { useState } from "react";
 import "./css/SignUp.css";
-import Fire from "./Fire";
+import Fire from "./Components/Fire";
 import { addDoc, collection } from 'firebase/firestore';
 
 function SignUp( {foodType, onSelectPage} ) {

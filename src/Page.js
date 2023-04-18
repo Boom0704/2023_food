@@ -1,5 +1,5 @@
 import { useSearchParams } from "react-router-dom";
-import Comment from "./Comment";
+import Comment from "./Components/Comment";
 import { useState } from "react";
 
 function Page( {foodType, onSelectPage} ) {

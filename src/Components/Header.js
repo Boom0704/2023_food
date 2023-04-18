@@ -1,8 +1,8 @@
 import React from 'react';
 import { Routes, Route, Link } from 'react-router-dom'
-import ball from './img/ball.jpeg';
-import "./css/Header.css";
-import "./css/reset.css";
+import ball from '../img/ball.jpeg';
+import "../css/Header.css";
+import "../css/reset.css";
 
 const Header = ( {onSelectPage} ) => (
     <div className="Header">

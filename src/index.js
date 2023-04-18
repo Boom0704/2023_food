@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './App';
 import { BrowserRouter } from "react-router-dom";
-import Header from './Header';
-import Aside from './Aside';
+import Header from './Components/Header';
+import Aside from './Components/Aside';
 
 function Root() {
   const [selectedPage, setSelectedPage] = useState('Korean');
