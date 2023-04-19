@@ -3,9 +3,9 @@ import "./css/Category.css";
 import { useState } from 'react';
 import Fire from './Components/Fire';
 
-function Category( {foodType, onSelectPage} ) {
+function Category( {foodType, onSelectPage, setPost} ) {
   const { data, db } = Fire("Post");
-
+  
   const Writing_button = (event) => {
     event.preventDefault();
     onSelectPage("Writing");
@@ -14,9 +14,9 @@ function Category( {foodType, onSelectPage} ) {
   return (
       <div>
         <div>음식 종류 : {foodType}</div>
-        {(foodType === "Home") ? data.map((card) => <Writing_Card info={card} onSelectPage={onSelectPage} />) : <></> }
+        {(foodType === "Home") ? data.map((card) => <Writing_Card info={card} onSelectPage={onSelectPage} setPost={setPost} />) : <></> }
         { data.filter((x) => foodType === x.type)
-        .map((card) => <Writing_Card info={card} onSelectPage={onSelectPage} />)} {/* 내가 햇소 ! */}
+        .map((card) => <Writing_Card info={card} onSelectPage={onSelectPage} setPost={setPost} />)} {/* 내가 햇소 ! */}
         <div> PAGE 번호 </div>
         <div>
           <button onClick={Writing_button}>글쓰기</button>
@@ -25,9 +25,12 @@ function Category( {foodType, onSelectPage} ) {
     );
   }
 
-  function Writing_Card( {info, onSelectPage} ) {
+  function Writing_Card( {info, onSelectPage, setPost} ) {
     return (
-      <div className='card' onClick={() => onSelectPage('Page')}> 
+      <div className='card' onClick={ () => {
+        setPost(info);
+        onSelectPage('Page');
+      } }> 
         <img className='preview_img' src={img_1} />
         <h2>{info.title}</h2>
         <p className='card_info_p'>{info.content}</p>

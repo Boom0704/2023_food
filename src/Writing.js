@@ -1,10 +1,9 @@
 import { useState } from "react";
 import "./css/Writing.css";
 import Fire from "./Components/Fire";
-import { setSelectionRange } from "@testing-library/user-event/dist/utils";
 import { addDoc, collection } from 'firebase/firestore';
 
-function Writing( {foodType, onSelectPage} ) {
+function Writing( {foodType, onSelectPage, loginState} ) {
     const { data, db } = Fire("Post");
 
     const [title, setTitle] = useState("");  // 제목 
@@ -16,7 +15,7 @@ function Writing( {foodType, onSelectPage} ) {
       const now = new Date();
       const view = 0;
       const like = 0;
-      const writer = data.writer;
+      const nickname = loginState.nickname; 
       const id = now.getTime().toString();  
       const date = now.toISOString();
 
@@ -24,9 +23,10 @@ function Writing( {foodType, onSelectPage} ) {
         alert("음식 종류를 선택하지 않았습니다.");
       } else {
         try {
-          await addDoc(collection(db, 'Post'), { id, title, content, like, type, view, writer, date });
+          await addDoc(collection(db, 'Post'), { id, title, content, like, type, view, nickname, date });
           onSelectPage(type);
         } catch (error) {
+          console.log("아이디" + loginState.nicknames);
           console.error(error);
           alert("올리기 실패 : " + error);
         }
@@ -60,6 +60,7 @@ function Writing( {foodType, onSelectPage} ) {
       </div>
     );
   }
+
   
   export default Writing;
   

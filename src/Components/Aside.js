@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import "../css/Aside.css";
 import SignUp from '../SignUp';
 import Fire from './Fire';
+import MyPage from '../MyPage';
 
 function LoginAside({ onLoginState, onSelectPage }) {
   const [id, setId] = useState('');
@@ -52,10 +53,15 @@ function LoginAside({ onLoginState, onSelectPage }) {
 }
 
 
-function UserAside( {loginState, onLoginState} ) {
+function UserAside( {loginState, onLoginState, onSelectPage} ) {
   const handleLogOut = (event) => {
     event.preventDefault();
     onLoginState(false);
+  }
+
+  const handleMyPage = (event) => {
+    event.preventDefault();
+    onSelectPage('MyPage');
   }
 
   return (
@@ -69,6 +75,7 @@ function UserAside( {loginState, onLoginState} ) {
         <li>상세메시지: {loginState.status}</li>
       </ul>
       <button className='logout_btn' onClick={handleLogOut}>로그아웃</button>
+      <button className='mypage_btn' onClick={handleMyPage}>마이페이지</button>
     </aside>
   );
 }
@@ -79,7 +86,7 @@ function Aside({loginState, onLoginState, onSelectPage}) {
       {loginState == false ? (
         <LoginAside onLoginState={onLoginState} onSelectPage={onSelectPage} />
       ) : (
-        <UserAside loginState={loginState} onLoginState={onLoginState} />
+        <UserAside loginState={loginState} onLoginState={onLoginState} onSelectPage={onSelectPage} />
       )}
     </>
   );
