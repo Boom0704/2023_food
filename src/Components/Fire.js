@@ -24,6 +24,7 @@ function Fire(collectionName) {
         const fetchData = async () => {
           const querySnapshot = await getDocs(collection(db, collectionName));
           const dataArr = querySnapshot.docs.map((doc) => doc.data());
+          dataArr.sort((a, b) => b.id - a.id); // 내가 햇소
           setData(dataArr);
         };
         fetchData();

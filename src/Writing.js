@@ -16,7 +16,7 @@ function Writing( {foodType, onSelectPage} ) {
       const now = new Date();
       const view = 0;
       const like = 0;
-      const writer = "세인";
+      const writer = data.writer;
       const id = now.getTime().toString();  
       const date = now.toISOString();
 

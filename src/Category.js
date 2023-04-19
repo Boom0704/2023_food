@@ -14,7 +14,9 @@ function Category( {foodType, onSelectPage} ) {
   return (
       <div>
         <div>음식 종류 : {foodType}</div>
-        {data.map((x) => <Writing_Card info={x} onSelectPage={onSelectPage}/> )}
+        {(foodType === "Home") ? data.map((card) => <Writing_Card info={card} onSelectPage={onSelectPage} />) : <></> }
+        { data.filter((x) => foodType === x.type)
+        .map((card) => <Writing_Card info={card} onSelectPage={onSelectPage} />)} {/* 내가 햇소 ! */}
         <div> PAGE 번호 </div>
         <div>
           <button onClick={Writing_button}>글쓰기</button>
@@ -28,7 +30,7 @@ function Category( {foodType, onSelectPage} ) {
       <div className='card' onClick={() => onSelectPage('Page')}> 
         <img className='preview_img' src={img_1} />
         <h2>{info.title}</h2>
-        <p>{info.content}</p>
+        <p className='card_info_p'>{info.content}</p>
         <div className='profile__like__view'>
           <img className='user_profile_img' src={img_1} />
           <div className='icon_like'>

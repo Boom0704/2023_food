@@ -14,13 +14,14 @@
 }
 
 .writing_title {
+  width: 45%;
   font-size: 25px;
   margin-left: 20px;
 }
 
 select {
   font-size: 30px;
-  width: 100px;
+  width: 170px;
   margin: 15px 30px;
 }
 
