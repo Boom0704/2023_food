@@ -1,6 +1,6 @@
 import img_1 from './img/1.jpeg';
 import "./css/Category.css";
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Fire from './Components/Fire';
 
 function Category( {foodType, onSelectPage, setPost, loginState} ) {
@@ -10,9 +10,45 @@ function Category( {foodType, onSelectPage, setPost, loginState} ) {
     onSelectPage("Writing");
   }
 
-  const [ currentPage, seCurrentPage ] = useState(1);
+  const [ currentPage, setCurrentPage ] = useState(1);
+
   const total_card = 6;
-  
+  const lastNum = currentPage * total_card;
+  const startNum = lastNum - total_card ;
+
+  const [ dataSlice, setDataSlice ] = useState([]);
+
+  const slicedData = data.filter((x) => foodType === x.type).slice(startNum, lastNum);
+  const lastPage = Math.ceil(data.filter((x) => foodType === x.type).length/total_card);
+
+  useEffect(() => {  //
+    if (lastPage < 5) {
+      const temp = [];
+      for (let i=1; i<=lastPage; i++) {
+        temp.push(i);
+      }
+      setDataSlice([...temp]);
+    }
+    else if (currentPage == 1 || currentPage == 2 ) {
+        setDataSlice([1,2,3,4,5]);
+      }
+    else if (currentPage == lastPage || currentPage == lastPage-1) {
+        setDataSlice([lastPage-4, lastPage-3, lastPage-2, lastPage-1, lastPage])
+      }
+    else {
+      setDataSlice( [currentPage-2, currentPage-1, currentPage, currentPage+1, currentPage+2] );
+    }
+  }, [currentPage, data, foodType]);
+
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [foodType]);
+
+
+  function pageMove(x) {
+    setCurrentPage(x);
+  }
+
 
   return (
       <div>
@@ -23,12 +59,11 @@ function Category( {foodType, onSelectPage, setPost, loginState} ) {
         { (foodType === "Home") 
         ? data.map((card) => <Writing_Card info={card} onSelectPage={onSelectPage} setPost={setPost} />) 
         : <></> }
-        { data.filter((x) => foodType === x.type)
-        .map((card) => <Writing_Card info={card} onSelectPage={onSelectPage} setPost={setPost} />)} {/* 선택한 음식 종류에 해당하는 게시물만 보여주기 */}
+        {slicedData.map((card) => <Writing_Card info={card} onSelectPage={onSelectPage} setPost={setPost} />)} {/* 선택한 음식 종류에 해당하는 게시물만 보여주기 */}
           <div>
-            <button>{"<"}</button>
-            {<button></button>}
-            <button>{">"}</button>
+            <button disabled={currentPage==1} onClick={() => pageMove(currentPage-1)}>{"<"}</button>
+            {dataSlice.map((x) => <button onClick={() => pageMove(x)}>{x}</button>)}
+            <button disabled={currentPage==lastPage} onClick={() => pageMove(currentPage+1)}>{">"}</button>
           </div>
       </div>
     );
