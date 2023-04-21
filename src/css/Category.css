@@ -1,12 +1,25 @@
+.category_title {
+  font-size: 24px; /* 글씨 크기 */
+  text-align: center; /* 가운데 정렬 */
+  font-weight: bold;
+}
+
+.category_title span {
+  font-size: 40px; /* 글씨 크기 */
+  font-weight: bold;
+}
+
 .card {
   background-color: cornflowerblue;
   display: inline-block;
   margin: 1% 2.5%;
+  border-radius: 20px;
   width: 20%;
 }
 
 .preview_img {
   width: 100%;
+  border-radius: 20px 20px 0 0;
 }
 
 .user_profile_img {
@@ -32,4 +45,27 @@
     overflow: hidden;
     text-overflow: ellipsis;
     width: 100%;
+}
+
+.writing_btn_p{
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+  padding: 20px 0; /* 위 아래 패딩 */
+}
+
+.writing_btn{
+  border-radius: 10px;
+  font-size: 16px;
+  padding: 10px 20px;
+  margin-top: 20px;
+  background-color: #f1f1f1;
+  cursor: pointer;
+  
+}
+
+.writing_btn:hover {
+  background-color: #ccc;
+  font-weight: bold;
 }

@@ -1,7 +1,7 @@
 import { useState } from "react";
 import "./css/SignUp.css";
 import Fire from "./Components/Fire";
-import { addDoc, collection } from 'firebase/firestore';
+import { setDoc, doc } from 'firebase/firestore';
 
 function SignUp( {foodType, onSelectPage} ) {
 
@@ -21,6 +21,7 @@ function SignUp( {foodType, onSelectPage} ) {
     const picture = "사진 주소";
     const id = now.getTime().toString();  
     const point = 0; 
+    const isAdmin = false;  // 관리자 
 
     if ( userID === "" || password === "" || nickname === "" || confirm === "") {
       alert("모두 입력해주세용."); 
@@ -28,7 +29,7 @@ function SignUp( {foodType, onSelectPage} ) {
       alert("비밀번호가 안 맞아요!!!");
     } else {
       try {
-        await addDoc(collection(db, 'User'), { id, level, nickname, password, picture, point, status, userID });
+        await setDoc(doc(db, 'User', id), { id, level, nickname, password, picture, point, status, userID, isAdmin });
         onSelectPage("Home");
       } catch (error) {
         console.error(error);

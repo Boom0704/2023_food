@@ -1,7 +1,7 @@
 import { useState } from "react";
 import "./css/Writing.css";
 import Fire from "./Components/Fire";
-import { addDoc, collection } from 'firebase/firestore';
+import { setDoc, doc } from 'firebase/firestore';
 
 function Writing( {foodType, onSelectPage, loginState} ) {
     const { data, db } = Fire("Post");
@@ -23,7 +23,7 @@ function Writing( {foodType, onSelectPage, loginState} ) {
         alert("음식 종류를 선택하지 않았습니다.");
       } else {
         try {
-          await addDoc(collection(db, 'Post'), { id, title, content, like, type, view, nickname, date });
+          await setDoc(doc(db, 'Post', id), { id, title, content, like, type, view, nickname, date });
           onSelectPage(type);
         } catch (error) {
           console.log("아이디" + loginState.nicknames);

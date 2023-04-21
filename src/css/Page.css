@@ -1,0 +1,60 @@
+.allPage {
+  padding: 40px;
+  padding-left: 23%;
+}
+
+.page_title {
+  font-size: 35px;
+  padding-bottom: 30px;
+}
+
+.mini_info {
+  margin-right: 20px;
+}
+
+.page_content {
+  width: 100%;
+  padding: 10px 0;
+}
+
+.likeBtn {
+  border-radius: 10px;
+  border: 1px;
+  font-size: 32 px;
+  padding: 10px 20px;
+  background-color: #f1f1f1;
+  cursor: pointer;
+}
+
+.deletePostBtn {
+  border-radius: 10px;
+  border: none;
+  font-size: 16px;
+  padding: 10px 20px;
+  background-color: red;
+  color: white;
+  cursor: pointer;
+}
+
+.comment {
+  border-top: 1px solid black;
+  padding-top: 10px;
+}
+
+  .likeBtn:hover{
+    background-color: #ddd;
+    font-weight: bold;
+    }
+
+  .deletePostBtn:hover {
+  background-color: #ccc;
+  font-weight: bold;
+  color: red;
+  }
+
+.btns{
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+  padding: 20px 0;
+}

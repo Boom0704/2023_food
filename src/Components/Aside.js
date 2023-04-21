@@ -3,6 +3,7 @@ import "../css/Aside.css";
 import SignUp from '../SignUp';
 import Fire from './Fire';
 import MyPage from '../MyPage';
+import Modal from './Modal';
 
 function LoginAside({ onLoginState, onSelectPage }) {
   const [id, setId] = useState('');
@@ -21,8 +22,8 @@ function LoginAside({ onLoginState, onSelectPage }) {
       }
       
     } catch (error) {
-      console.log('로그인 실패ss');
-      alert('로그인에 실패했습니다.');
+      console.log('로그인 실패 ㅠㅠ');
+      alert('로그인에 실패햇서용.');
     }
   }
 
@@ -36,8 +37,7 @@ function LoginAside({ onLoginState, onSelectPage }) {
       <h2>로그인</h2>
       <form>
         <label>
-          아이디
-          <input type="text" name="username" placeholder='ID' value={id} onChange={(event) => setId(event.target.value)} />
+          아이디                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       <input type="text" name="username" placeholder='ID' value={id} onChange={(event) => setId(event.target.value)} />
         </label>
         <br />
         <label>
@@ -55,13 +55,22 @@ function LoginAside({ onLoginState, onSelectPage }) {
 
 function UserAside( {loginState, onLoginState, onSelectPage} ) {
   const handleLogOut = (event) => {
-    event.preventDefault();
     onLoginState(false);
   }
 
   const handleMyPage = (event) => {
-    event.preventDefault();
     onSelectPage('MyPage');
+  }
+
+
+  const [isOpen, setIsOpen] = useState(false);  // Modal 창 열고 닫기 
+
+  const handleOpenModal = () => {
+    setIsOpen(true);
+  }
+
+  const handleCloseModal = () => {
+    setIsOpen(false);
   }
 
   return (
@@ -76,6 +85,10 @@ function UserAside( {loginState, onLoginState, onSelectPage} ) {
       </ul>
       <button className='logout_btn' onClick={handleLogOut}>로그아웃</button>
       <button className='mypage_btn' onClick={handleMyPage}>마이페이지</button>
+      {(loginState.isAdmin == true) 
+      ? <button className='forbidden_btn' onClick={handleOpenModal}>금지 단어</button> 
+      : <></> }
+      {isOpen && <Modal handleCloseModal = {handleCloseModal} />}
     </aside>
   );
 }

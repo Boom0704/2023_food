@@ -11,7 +11,7 @@ function App({ selectedPage, onSelectPage, loginState }) {
   const [post, setPost] = useState(null);  // 개시물 
 
   if (header_foodtype.includes(selectedPage)) { 
-    return <Category foodType={selectedPage} onSelectPage={onSelectPage} setPost={setPost} />;
+    return <Category foodType={selectedPage} onSelectPage={onSelectPage} setPost={setPost} loginState={loginState} />;
   } else if (selectedPage === 'SignUp') {
     return <SignUp foodType={selectedPage} onSelectPage={onSelectPage} />; 
   } else if (selectedPage === 'Writing') {

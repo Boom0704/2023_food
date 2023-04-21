@@ -4,8 +4,73 @@ aside {
   padding-left: 0.5rem;
   margin-left: 0.5rem;
   float: left;
-  box-shadow: inset 5px 0 5px -5px #29627e;
+  box-shadow: 2px 0 0 0 #000;
   font-style: italic;
   color: #29627e;
-  background-color: tomato;
+}
+
+.userInfo{
+  font-size: 20px;
+  padding: 5px;
+}
+
+.userInfo input{
+  font-size: 18px;
+  padding: 5px;
+}
+
+.loginInfo{
+  font-size: 24px;
+  font-weight: bold;
+  padding: 20px;
+}
+
+
+.login_btn{
+  display: inline-block;
+  width: 100px;
+  height: 40px;
+  border-radius: 10px;
+  font-size: 16px;
+  background-color: #f1f1f1;
+  cursor: pointer;
+  margin: 0px;
+}
+.signUp_btn{
+  display: inline-block;
+  width: 100px;
+  height: 40px;
+  border-radius: 10px;
+  font-size: 16px;
+  background-color: #f1f1f1;
+  cursor: pointer;
+  margin: 10px;
+}
+.logout_btn{
+  display: inline-block;
+  width: 100px;
+  height: 40px;
+  border-radius: 10px;
+  font-size: 16px;
+  background-color: #f1f1f1;
+  cursor: pointer;
+  margin: 0px;
+}
+.mypage_btn{
+  display: inline-block;
+  width: 100px;
+  height: 40px;
+  border-radius: 10px;
+  font-size: 16px;
+  background-color: #f1f1f1;
+  cursor: pointer;
+  margin: 10px;
+}
+
+.login_btn:hover,
+.signUp_btn:hover,
+.logout_btn:hover,
+.mypage_btn:hover {
+background-color: #ccc;
+font-weight: bold;
 }

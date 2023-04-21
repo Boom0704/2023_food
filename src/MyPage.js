@@ -22,9 +22,9 @@ function MyPage() {
   const handleNicknameChange = (e) => {
     e.preventDefault();
     if (nickname === "") {
-      alert("변경할 닉네임을 입력해주세요.");
+      alert("변경할 닉네임을 입력해주세용!");
     } else {
-      const confirmChange = window.confirm("변경하시겠습니까?");
+      const confirmChange = window.confirm("변경할래용?");
       if (confirmChange) {
         // change nickname logic here
       }
@@ -34,9 +34,9 @@ function MyPage() {
   const handleStatusChange = (e) => {
     e.preventDefault();
     if (status === "") {
-      alert("변경할 상태 메시지를 입력해주세요.");
+      alert("변경할 상태 메시지를 입력해주세용!");
     } else {
-      const confirmChange = window.confirm("변경하시겠습니까?");
+      const confirmChange = window.confirm("변경할래용?");
       if (confirmChange) {
         // change status logic here
       }
@@ -76,3 +76,4 @@ function MyPage() {
 export default MyPage;
 
 // 비밀번호, 닉네임 변경
+
