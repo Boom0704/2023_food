@@ -5,7 +5,7 @@ import Fire from "./Components/Fire"; // Firestore 객체 가져오기
 import "./css/Page.css";
 
 
-function Page( {foodType, onSelectPage, post, loginState} ) {
+function Page( {foodType, setSelectPage, post, loginState} ) {
   const [comment, setComment] = useState(["a"]);
   const { data, db } = Fire("Post");
   
@@ -14,7 +14,7 @@ function Page( {foodType, onSelectPage, post, loginState} ) {
 
     await deleteDoc(doc(db, "Post", post.id));
 
-    onSelectPage("Home");
+    setSelectPage("Home");
   }
 
   return (

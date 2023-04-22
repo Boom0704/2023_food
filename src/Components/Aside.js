@@ -5,7 +5,7 @@ import Fire from './Fire';
 import MyPage from '../MyPage';
 import Modal from './Modal';
 
-function LoginAside({ onLoginState, onSelectPage }) {
+function LoginAside({ setLoginState, setSelectPage }) {
   const [id, setId] = useState('');
   const [password, setPassword] = useState('');
   const { data, db } = Fire('User');
@@ -15,12 +15,11 @@ function LoginAside({ onLoginState, onSelectPage }) {
     try {
       const userData = data.find((user) => user.userID === id && user.password === password);
       
-      if (userData == undefined) {
+      if (userData === undefined) {
         alert("아이디와 비번 확인");
       } else {
-        onLoginState(userData);
+        setLoginState(userData);
       }
-      
     } catch (error) {
       console.log('로그인 실패 ㅠㅠ');
       alert('로그인에 실패햇서용.');
@@ -28,8 +27,7 @@ function LoginAside({ onLoginState, onSelectPage }) {
   }
 
   const handleSignUp = (event) => {
-    event.preventDefault();
-    onSelectPage("SignUp");
+    setSelectPage("SignUp");
   }
 
   return (
@@ -53,13 +51,13 @@ function LoginAside({ onLoginState, onSelectPage }) {
 }
 
 
-function UserAside( {loginState, onLoginState, onSelectPage} ) {
+function UserAside( {loginState, setLoginState, setSelectPage} ) {
   const handleLogOut = (event) => {
-    onLoginState(false);
+    setLoginState(false);
   }
 
   const handleMyPage = (event) => {
-    onSelectPage('MyPage');
+    setSelectPage('MyPage');
   }
 
 
@@ -85,7 +83,7 @@ function UserAside( {loginState, onLoginState, onSelectPage} ) {
       </ul>
       <button className='logout_btn' onClick={handleLogOut}>로그아웃</button>
       <button className='mypage_btn' onClick={handleMyPage}>마이페이지</button>
-      {(loginState.isAdmin == true) 
+      {(loginState.isAdmin === true) 
       ? <button className='forbidden_btn' onClick={handleOpenModal}>금지 단어</button> 
       : <></> }
       {isOpen && <Modal handleCloseModal = {handleCloseModal} />}
@@ -93,13 +91,13 @@ function UserAside( {loginState, onLoginState, onSelectPage} ) {
   );
 }
 
-function Aside({loginState, onLoginState, onSelectPage}) {
+function Aside({loginState, setLoginState, setSelectPage}) {
   return (
     <>
-      {loginState == false ? (
-        <LoginAside onLoginState={onLoginState} onSelectPage={onSelectPage} />
+      {loginState === false ? (
+        <LoginAside setLoginState={setLoginState} setSelectPage={setSelectPage} />
       ) : (
-        <UserAside loginState={loginState} onLoginState={onLoginState} onSelectPage={onSelectPage} />
+        <UserAside loginState={loginState} setLoginState={setLoginState} setSelectPage={setSelectPage} />
       )}
     </>
   );

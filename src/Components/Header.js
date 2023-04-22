@@ -4,7 +4,7 @@ import ball from '../img/ball.jpeg';
 import "../css/Header.css";
 import "../css/reset.css";
 
-const Header = ( {onSelectPage} ) => (
+const Header = ( {setSelectPage} ) => (
     <div className="Header">
         <div className="logo">
             <img src={ball} />
@@ -17,13 +17,13 @@ const Header = ( {onSelectPage} ) => (
         </div>
         <nav className='nav_bar'>
         <ul>
-          <li><a href="#" onClick={() => onSelectPage('Home')}>Home</a></li>
-          <li><a href="#" onClick={() => onSelectPage('Korean')}>한식</a></li>
-          <li><a href="#" onClick={() => onSelectPage('Chinese')}>중식</a></li>
-          <li><a href="#" onClick={() => onSelectPage('Western')}>양식</a></li>
-          <li><a href="#" onClick={() => onSelectPage('Japan')}>일식</a></li>
-          <li><a href="#" onClick={() => onSelectPage('Dessert')}>디저트</a></li>
-          <li><a href="#" onClick={() => onSelectPage('Writing')}>글쓰기</a></li>
+          <li><a href="#" onClick={() => setSelectPage('Home')}>Home</a></li>
+          <li><a href="#" onClick={() => setSelectPage('Korean')}>한식</a></li>
+          <li><a href="#" onClick={() => setSelectPage('Chinese')}>중식</a></li>
+          <li><a href="#" onClick={() => setSelectPage('Western')}>양식</a></li>
+          <li><a href="#" onClick={() => setSelectPage('Japan')}>일식</a></li>
+          <li><a href="#" onClick={() => setSelectPage('Dessert')}>디저트</a></li>
+          <li><a href="#" onClick={() => setSelectPage('Writing')}>글쓰기</a></li>
         </ul>
       </nav>
     </div>

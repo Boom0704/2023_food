@@ -6,14 +6,14 @@ import Header from './Components/Header';
 import Aside from './Components/Aside';
 
 function Root() {
-  const [selectedPage, setSelectedPage] = useState('Home');
+  const [selectedPage, setSelectPage] = useState('Home');
   const [loginState, setLoginState] = useState(false);
   
   return (
     <BrowserRouter>
-      <Header onSelectPage={setSelectedPage} />
-      <Aside loginState={loginState} onLoginState={setLoginState} onSelectPage={setSelectedPage} />  {/* 로그인 상태 변경 함수 */}
-      <App selectedPage={selectedPage} onSelectPage={setSelectedPage} loginState={loginState} /> {/* 페이지 이동 */}
+      <Header setSelectPage={setSelectPage} />
+      <Aside loginState={loginState} setLoginState={setLoginState} setSelectPage={setSelectPage} />  {/* 로그인 상태 변경 함수 */}
+      <App selectedPage={selectedPage} setSelectPage={setSelectPage} loginState={loginState} setLoginState={setLoginState} /> {/* 페이지 이동 */}
     
     </BrowserRouter>
   );

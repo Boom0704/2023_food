@@ -3,7 +3,7 @@ import "./css/SignUp.css";
 import Fire from "./Components/Fire";
 import { setDoc, doc } from 'firebase/firestore';
 
-function SignUp( {foodType, onSelectPage} ) {
+function SignUp( {foodType, setSelectPage} ) {
 
   const { data, db } = Fire("User");
 
@@ -30,7 +30,7 @@ function SignUp( {foodType, onSelectPage} ) {
     } else {
       try {
         await setDoc(doc(db, 'User', id), { id, level, nickname, password, picture, point, status, userID, isAdmin });
-        onSelectPage("Home");
+        setSelectPage("Home");
       } catch (error) {
         console.error(error);
         alert("올리기 실패 : " + error);

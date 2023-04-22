@@ -3,7 +3,7 @@ import "./css/Writing.css";
 import Fire from "./Components/Fire";
 import { setDoc, doc } from 'firebase/firestore';
 
-function Writing( {foodType, onSelectPage, loginState} ) {
+function Writing( {foodType, setSelectPage, loginState} ) {
     const { data, db } = Fire("Post");
 
     const [title, setTitle] = useState("");  // 제목 
@@ -24,7 +24,7 @@ function Writing( {foodType, onSelectPage, loginState} ) {
       } else {
         try {
           await setDoc(doc(db, 'Post', id), { id, title, content, like, type, view, nickname, date });
-          onSelectPage(type);
+          setSelectPage(type);
         } catch (error) {
           console.log("아이디" + loginState.nicknames);
           console.error(error);
