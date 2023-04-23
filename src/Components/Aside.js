@@ -15,30 +15,33 @@ function LoginAside({ setLoginState, setSelectPage }) {
     try {
       const userData = data.find((user) => user.userID === id && user.password === password);
       
-      if (userData === undefined) {
+      if (userData == undefined) {
         alert("아이디와 비번 확인");
       } else {
         setLoginState(userData);
       }
+      
     } catch (error) {
-      console.log('로그인 실패 ㅠㅠ');
-      alert('로그인에 실패햇서용.');
+      console.log('로그인 실패ss');
+      alert('로그인에 실패했습니다.');
     }
   }
 
   const handleSignUp = (event) => {
+    event.preventDefault();
     setSelectPage("SignUp");
   }
 
   return (
     <aside>
-      <h2>로그인</h2>
+      <h2 className='loginInfo'>로그인</h2>
       <form>
-        <label>
-          아이디                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       <input type="text" name="username" placeholder='ID' value={id} onChange={(event) => setId(event.target.value)} />
+        <label className='userInfo'>
+          아이디
+          <input type="text" name="username" placeholder='ID' value={id} onChange={(event) => setId(event.target.value)} />
         </label>
         <br />
-        <label>
+        <label className='userInfo'>
           비밀번호
           <input type="password" name="password" placeholder='Password' value={password} onChange={(event) => setPassword(event.target.value)} />
         </label>
@@ -53,13 +56,14 @@ function LoginAside({ setLoginState, setSelectPage }) {
 
 function UserAside( {loginState, setLoginState, setSelectPage} ) {
   const handleLogOut = (event) => {
+    event.preventDefault();
     setLoginState(false);
   }
 
   const handleMyPage = (event) => {
+    event.preventDefault();
     setSelectPage('MyPage');
   }
-
 
   const [isOpen, setIsOpen] = useState(false);  // Modal 창 열고 닫기 
 
@@ -71,15 +75,16 @@ function UserAside( {loginState, setLoginState, setSelectPage} ) {
     setIsOpen(false);
   }
 
+
   return (
     <aside>
-      <h2>유저 정보</h2>
+      <h2 className='loginInfo'>유저 정보</h2>
       <ul>
-        <li>아이디: {loginState.userID}</li> <br/>
-        <li>닉네임: {loginState.nickname}</li> <br/>
-        <li>레벨: {loginState.level}</li> <br/>
-        <li>포인트: {loginState.point}</li> <br/>
-        <li>상세메시지: {loginState.status}</li>
+        <li className='userInfo'>아이디: {loginState.userID}</li> <br/>
+        <li className='userInfo'>닉네임: {loginState.nickname}</li> <br/>
+        <li className='userInfo'>레벨: {loginState.level}</li> <br/>
+        <li className='userInfo'>포인트: {loginState.point}</li> <br/>
+        <li className='userInfo'>상세메시지: {loginState.status}</li>
       </ul>
       <button className='logout_btn' onClick={handleLogOut}>로그아웃</button>
       <button className='mypage_btn' onClick={handleMyPage}>마이페이지</button>
@@ -87,14 +92,14 @@ function UserAside( {loginState, setLoginState, setSelectPage} ) {
       ? <button className='forbidden_btn' onClick={handleOpenModal}>금지 단어</button> 
       : <></> }
       {isOpen && <Modal handleCloseModal = {handleCloseModal} />}
-    </aside>
+    </aside>  
   );
 }
 
 function Aside({loginState, setLoginState, setSelectPage}) {
   return (
     <>
-      {loginState === false ? (
+      {loginState == false ? (
         <LoginAside setLoginState={setLoginState} setSelectPage={setSelectPage} />
       ) : (
         <UserAside loginState={loginState} setLoginState={setLoginState} setSelectPage={setSelectPage} />

@@ -1,7 +1,7 @@
 import { useState } from "react";
 import "./css/Writing.css";
 import Fire from "./Components/Fire";
-import { setDoc, doc } from 'firebase/firestore';
+import { doc, setDoc } from 'firebase/firestore';
 
 function Writing( {foodType, setSelectPage, loginState} ) {
     const { data, db } = Fire("Post");
@@ -16,21 +16,27 @@ function Writing( {foodType, setSelectPage, loginState} ) {
       const view = 0;
       const like = 0;
       const nickname = loginState.nickname; 
-      const id = now.getTime().toString();  
+      const id = now.getTime().toString(); 
       const date = now.toISOString();
+      const picture = loginState.picture;
 
       if (type === "") {
         alert("음식 종류를 선택하지 않았습니다.");
       } else {
         try {
-          await setDoc(doc(db, 'Post', id), { id, title, content, like, type, view, nickname, date });
-          setSelectPage(type);
+          await setDoc(doc(db, 'Post', id), { id, title, content, like, type, view, nickname, date, picture });
+            setSelectPage(type);
         } catch (error) {
           console.log("아이디" + loginState.nicknames);
           console.error(error);
           alert("올리기 실패 : " + error);
         }
       }
+    }
+
+    const handleAddPic = () => {
+      // 나머지 코드
+      alert("더ㅜㅐㅣㅑ");
     }
 
     return (
@@ -49,11 +55,12 @@ function Writing( {foodType, setSelectPage, loginState} ) {
               <option value="Japan">일식</option>
               <option value="Dessert">디저트</option>
             </select>
-              <button className="pic_btn">사진</button>
 
-            <p>
+            <input type="file" accept="image/*" onInput={() => {handleAddPic();}}/>
+            <div className="previewImg"></div>
+            <div className="writing_box">
               <textarea className="writing_textarea" placeholder="Input some text." onChange={(e) => setContent(e.target.value)}></textarea>
-            </p>
+            </div>
             <button type="submit" className="ok_btn">OK</button>
           <br />
         </form>

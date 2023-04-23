@@ -18,10 +18,11 @@ function Category( {foodType, setSelectPage, setPost, loginState} ) {
 
   const [ dataSlice, setDataSlice ] = useState([]);
 
+
   const slicedData = data.filter((x) => foodType === x.type).slice(startNum, lastNum);
   const lastPage = Math.ceil(data.filter((x) => foodType === x.type).length/total_card);
 
-  useEffect(() => {  //
+  useEffect(() => {  
     if (lastPage < 5) {
       const temp = [];
       for (let i=1; i<=lastPage; i++) {
@@ -53,7 +54,8 @@ function Category( {foodType, setSelectPage, setPost, loginState} ) {
   return (
       <div>
           <div className='writing_btn_p'>
-          <h3 className='category_title'><span>{foodType}</span> 게시판</h3>
+          <h3 className='category_title'> 
+          {(foodType == 'MyPage') ? <span>{loginState.nickname}님의</span> : <span>{foodType}</span>} 게시판</h3>
           <button className='writing_btn' onClick={Writing_button}>글쓰기</button>
         </div>
         { (foodType === "Home") 

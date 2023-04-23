@@ -1,29 +1,52 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import Fire from './Fire';
+import { doc, setDoc } from 'firebase/firestore';
 //import "./css/Modal.css";
 
-function Modal({handleCloseModal}) {
+function Modal({ handleCloseModal }) {
 
-  const [wordList, setWordList] = useState(['a']);
+  const {data, db, setData} = Fire("Forbidden");
+  const [word, setWord] = useState('');
+
+  async function handleAddWord() {
+    const now = new Date(); 
+    const id = now.getTime().toString(); 
+      if (word === "") {
+        alert("추가할 단어를 입력해주세용!");
+      } else {
+        await setDoc(doc(db, 'Forbidden', id), { word, id });
+        setData(...data, word);
+    }
+  }
+
+  const check={
+    word: word
+  };
+
 
   return(
   <div>
     <h2>금지 단어</h2>
-    <input className='forbidden_input' type="text"></input>
-    <button className='forbidden_add_btn'>Add</button>
+    <input className='forbidden_input' type="text" onChange={(event) => setWord(event.target.value)}></input>
+    <button className='forbidden_add_btn' onClick={handleAddWord}>Add</button>
     <div className='forbidden_word_list'>
-      {wordList.map((x) => <ForbiddenWord />)}
+      {data.map((x) => <ForbiddenWord x={x}/>)}
+      { useEffect(() => {
+      <ForbiddenWord x={check}/>
+    }, [data])
+  }
+      
     </div>
     <button onClick={handleCloseModal}>Close</button>
   </div>
   );
 }
 
-
-function ForbiddenWord() {
-  return(
+function ForbiddenWord({x}) {
+  return (
     <>
-    <p className='forbidden_content'></p>
-    <button className='forbidden_delete_btn'></button>
+    <p className='forbidden_content'>{x.word}</p>
+    <button className='forbidden_delete_btn'>x</button>
     </>
   );
 }

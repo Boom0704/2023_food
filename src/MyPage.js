@@ -3,6 +3,7 @@ import "./css/MyPage.css";
 import Category from "./Category";
 import Fire from "./Components/Fire";
 import { doc, updateDoc } from 'firebase/firestore';
+import img_1 from './img/1.jpeg';
 
 function MyPage({setLoginState, loginState, setSelectPage}) {
   const [password, setPassword] = useState("");
@@ -80,8 +81,8 @@ function MyPage({setLoginState, loginState, setSelectPage}) {
           </div>
         <div className="UserInfo_Item">
           <span className="Item_Label">Picture: </span>
-          <span className="Item_Value">{loginState.picture}</span>
-          <input type="text" className="Item_Value" onChange={(event) => setNickname(event.target.value)} />
+          <img className='user_profile_img' src={img_1} />
+          <input type="file" accept="image/*" />
           <button type="button" onClick={handleNicknameChange}>변경</button>
         </div>
         <div className="UserInfo_Item">
@@ -104,7 +105,6 @@ function MyPage({setLoginState, loginState, setSelectPage}) {
         </div>
       </div>
     </div>
-    <Category/>
   </>
   );
 }

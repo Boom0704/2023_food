@@ -67,10 +67,27 @@ aside {
   margin: 10px;
 }
 
+.forbidden_btn{
+  display: inline-block;
+  width: 100px;
+  height: 40px;
+  border-radius: 10px;
+  font-size: 16px;
+  color: white;
+  background-color: #f00;
+  cursor: pointer;
+  margin: 0px;
+}
 .login_btn:hover,
 .signUp_btn:hover,
 .logout_btn:hover,
-.mypage_btn:hover {
+.mypage_btn:hover{
 background-color: #ccc;
 font-weight: bold;
 }
+
+.forbidden_btn:hover {
+  background-color: pink;
+  color: black;
+  font-weight: bold;
+  }

@@ -19,7 +19,10 @@ function App({ selectedPage, setSelectPage, loginState, setLoginState }) {
   } else if (selectedPage === 'Page') {
     return <Page foodType={selectedPage} setSelectPage={setSelectPage} post={post} loginState={loginState} />; 
   } else if (selectedPage === 'MyPage') {
-    return <MyPage foodType={selectedPage} setSelectPage={setSelectPage} loginState={loginState} setLoginState={setLoginState} />; 
+    return <>
+        <MyPage foodType={selectedPage} setSelectPage={setSelectPage} loginState={loginState} setLoginState={setLoginState} />;
+        <Category foodType={selectedPage} setSelectPage={setSelectPage} setPost={setPost} loginState={loginState} />;
+        </>
   } else {
     return <div>ERROR</div>;
   }
