@@ -1,9 +1,25 @@
-function Comment() {
+import Fire from "./Fire";
+import { doc, deleteDoc } from "firebase/firestore";
+import { useState } from "react";
+
+function Comment({x}) {
+  const {data, db, setData} = Fire("Forbidden");
+
+  function handleDeleteComment() {
+    alert("삭제 버튼이에용");
+  }
+
+  function handleReComment() {
+    
+  }
+
   return (
     <div>
-      <span>사람 ID</span>
-      <span>댓글 내용</span>
-      <span>댓글 작성 시간</span>
+      <span>{x.nickname}</span>
+      <span>{x.content}</span>
+      <span>{x.date}</span>
+      <button onClick={() => {handleReComment()}}>💬</button>
+      <button onClick={() => {handleDeleteComment()}}>❌</button>
     </div>
   );
 }

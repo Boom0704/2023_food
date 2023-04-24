@@ -4,7 +4,8 @@ import Fire from "./Components/Fire";
 import { doc, setDoc } from 'firebase/firestore';
 
 function Writing( {foodType, setSelectPage, loginState} ) {
-    const { data, db } = Fire("Post");
+    const { data } = Fire("Forbidden");
+    const { db } = Fire("Post");
 
     const [title, setTitle] = useState("");  // 제목 
     const [type, setType] = useState("");  // 음식 타입 - 한식 중식 머시기
@@ -20,8 +21,16 @@ function Writing( {foodType, setSelectPage, loginState} ) {
       const date = now.toISOString();
       const picture = loginState.picture;
 
+      // 제목이랑 글쓰기 란에 나쁜말 있는지 확인 
+      const datas = data.map((x) => x.word);
+      const forbiddenTitle = datas.filter((x) => title.includes(x));
+      const forbiddenContent = datas.filter((x) => content.includes(x));
+      const titleContent = [...new Set([...forbiddenTitle, ...forbiddenContent])];
+
       if (type === "") {
         alert("음식 종류를 선택하지 않았습니다.");
+      } else if (titleContent.length != 0) {
+        alert( titleContent.join(', ') + " 나쁜말! 🤬");
       } else {
         try {
           await setDoc(doc(db, 'Post', id), { id, title, content, like, type, view, nickname, date, picture });

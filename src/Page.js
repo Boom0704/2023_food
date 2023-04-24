@@ -6,7 +6,34 @@ import "./css/Page.css";
 
 
 function Page( {foodType, setSelectPage, post, loginState} ) {
-  const [comment, setComment] = useState(["a"]);
+  const [comment, setComment] = useState(
+    [{
+      id :1,
+      nickname :"a",
+      content : "내용이요.",
+      date : "2019년 3월 22일",
+      is_head : 0,
+   }, {
+      id :2,
+      nickname :"a",
+      content : "내용이요.",
+      date : "2019년 3월 22일",
+      is_head : 0,
+   },{
+      id :3,
+      nickname :"a",
+      content : "대댓글이요.",
+      date : "2019년 3월 22일",
+      is_head : 1,
+   }, {
+      id :4,
+      nickname :"a",
+      content : "내용이요.",
+      date : "2019년 3월 22일",
+      is_head : 0,
+   } ]
+  );
+
   const { data, db } = Fire("Post");
   
   const deletePost = async (event) => {
@@ -34,7 +61,11 @@ function Page( {foodType, setSelectPage, post, loginState} ) {
         (loginState.isAdmin) ? <button className="deletePostBtn" onClick={deletePost}>삭제 버튼</button> : <></> }
       </div>
       <div className="comment">
-        {comment.map((x) => <Comment />)}
+        <div>
+          <input type="text" />
+          <button>입력</button>
+        </div>
+        {comment.map((x) => <Comment x={x} />)}
       </div>
     </div>
   );

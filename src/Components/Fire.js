@@ -30,6 +30,6 @@ function Fire(collectionName) {
         fetchData();
       }, [collectionName]);
     
-      return { data, db };
+      return { data, db, setData };
 }
 export default Fire;

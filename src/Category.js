@@ -18,10 +18,16 @@ function Category( {foodType, setSelectPage, setPost, loginState} ) {
 
   const [ dataSlice, setDataSlice ] = useState([]);
 
+  let slicedData = data.filter((x) => foodType === x.type).slice(startNum, lastNum);
+  let lastPage = Math.ceil(data.filter((x) => foodType === x.type).length/total_card);
 
-  const slicedData = data.filter((x) => foodType === x.type).slice(startNum, lastNum);
-  const lastPage = Math.ceil(data.filter((x) => foodType === x.type).length/total_card);
+  if (foodType==="MyPage") {
+    slicedData = data.filter((x) => loginState.nickname === x.nickname).slice(startNum, lastNum);
+    lastPage = Math.ceil(data.filter((x) => loginState.nickname === x.nickname).length/total_card);
+  }
 
+
+  
   useEffect(() => {  
     if (lastPage < 5) {
       const temp = [];
@@ -59,8 +65,8 @@ function Category( {foodType, setSelectPage, setPost, loginState} ) {
           <button className='writing_btn' onClick={Writing_button}>글쓰기</button>
         </div>
         { (foodType === "Home") 
-        ? data.map((card) => <Writing_Card info={card} setSelectPage={setSelectPage} setPost={setPost} />) 
-        : <></> }
+          ? data.map((card) => <Writing_Card info={card} onSelectPage={setSelectPage} setPost={setPost} />) 
+          : <></> }
         {slicedData.map((card) => <Writing_Card info={card} setSelectPage={setSelectPage} setPost={setPost} />)} {/* 선택한 음식 종류에 해당하는 게시물만 보여주기 */}
           <div>
             <button disabled={currentPage==1} onClick={() => pageMove(currentPage-1)}>{"<"}</button>
