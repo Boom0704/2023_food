@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import Fire from './Fire';
 import { doc, setDoc, deleteDoc } from 'firebase/firestore';
-//import "./css/Modal.css";
+import "../css/Modal.css";
 
 function Modal({ handleCloseModal }) {
 
@@ -51,6 +51,7 @@ function ForbiddenWord({x, handleCloseModal}) {
     <>
       <p className='forbidden_content'>{x.word}</p>
       <button className='forbidden_delete_btn' onClick={() => {handleDeleteWord()} }>❌</button>
+      <br/>
     </>
   );
 }

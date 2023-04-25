@@ -14,26 +14,28 @@ function Writing( {foodType, setSelectPage, loginState} ) {
     const handleWritingSubmit = async (e) => {
       e.preventDefault();
       const now = new Date();
+      const user_id = loginState.id;
       const view = 0;
       const like = 0;
       const nickname = loginState.nickname; 
       const id = now.getTime().toString(); 
       const date = now.toISOString();
       const picture = loginState.picture;
+      const comment = "";
 
       // 제목이랑 글쓰기 란에 나쁜말 있는지 확인 
-      const datas = data.map((x) => x.word);
+      const datas = data.map((x) => x.word);  // 금지 단어들 배열로 가져옴 
       const forbiddenTitle = datas.filter((x) => title.includes(x));
       const forbiddenContent = datas.filter((x) => content.includes(x));
       const titleContent = [...new Set([...forbiddenTitle, ...forbiddenContent])];
 
       if (type === "") {
         alert("음식 종류를 선택하지 않았습니다.");
-      } else if (titleContent.length != 0) {
+      } else if (titleContent.length !== 0) {
         alert( titleContent.join(', ') + " 나쁜말! 🤬");
       } else {
         try {
-          await setDoc(doc(db, 'Post', id), { id, title, content, like, type, view, nickname, date, picture });
+          await setDoc(doc(db, 'Post', id), { id, title, content, like, type, view, nickname, date, picture, comment, user_id });
             setSelectPage(type);
         } catch (error) {
           console.log("아이디" + loginState.nicknames);

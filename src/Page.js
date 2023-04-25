@@ -1,41 +1,18 @@
 import Comment from "./Components/Comment";
 import { useState } from "react";
-import { doc, deleteDoc } from "firebase/firestore";
+import { doc, deleteDoc, updateDoc } from "firebase/firestore";
 import Fire from "./Components/Fire"; // Firestore 객체 가져오기
 import "./css/Page.css";
 
 
 function Page( {foodType, setSelectPage, post, loginState} ) {
-  const [comment, setComment] = useState(
-    [{
-      id :1,
-      nickname :"a",
-      content : "내용이요.",
-      date : "2019년 3월 22일",
-      is_head : 0,
-   }, {
-      id :2,
-      nickname :"a",
-      content : "내용이요.",
-      date : "2019년 3월 22일",
-      is_head : 0,
-   },{
-      id :3,
-      nickname :"a",
-      content : "대댓글이요.",
-      date : "2019년 3월 22일",
-      is_head : 1,
-   }, {
-      id :4,
-      nickname :"a",
-      content : "내용이요.",
-      date : "2019년 3월 22일",
-      is_head : 0,
-   } ]
-  );
 
-  const { data, db } = Fire("Post");
-  
+  //let commentSplit = post.comment.split("🁽🁮");
+  //const parseData = commentSplit.map((cs) => JSON.parse(cs));
+
+  const { data, db, setData } = Fire("Post");
+  const [ newComment, setNewComment ] = useState("");
+
   const deletePost = async (event) => {
     event.preventDefault();
 
@@ -43,6 +20,26 @@ function Page( {foodType, setSelectPage, post, loginState} ) {
 
     setSelectPage("Home");
   }
+
+
+  async function handleAddComment() {  // 외부데이터는 다 async 
+    const now = new Date();
+    let dummy = {
+      id : now.getTime().toString(),
+      nickname : loginState.nickname,
+      user_id : loginState.id,
+      content : newComment,
+      date : now.toISOString(),
+      reComment : []
+    }
+
+    const updateData = {
+      comment: "",
+    };
+    const docRef = doc(db, 'Post', post.id);
+    await updateDoc(docRef, updateData);
+  }
+
 
   return (
     <div className="allPage">
@@ -62,10 +59,10 @@ function Page( {foodType, setSelectPage, post, loginState} ) {
       </div>
       <div className="comment">
         <div>
-          <input type="text" />
-          <button>입력</button>
+          <input type="text" onChange={(event) => setNewComment(event.target.value)} />
+          <button onClick={() => {handleAddComment()}}>입력</button>
         </div>
-        {comment.map((x) => <Comment x={x} />)}
+        {/* {parseData.map((x) => <Comment x={x} />)} */}
       </div>
     </div>
   );
