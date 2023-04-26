@@ -24,7 +24,7 @@ function Fire(collectionName) {
         const fetchData = async () => {
           const querySnapshot = await getDocs(collection(db, collectionName));  // collectionName이 변경될 때마다 함수가 다시 실행됨 (애플리케이션이 렌더링될 때 컬렉션에서 데이터를 가져오고 데이터가 변경될 때마다 업데이트할 수 있다)
           const dataArr = querySnapshot.docs.map((doc) => doc.data());  // map으로 하나씩 데이터 가져오기 
-          dataArr.sort((a, b) => b.id - a.id); // 내가 햇소 ()
+          dataArr.sort((a, b) => b.id - a.id); 
           setData(dataArr);
         };
         fetchData();

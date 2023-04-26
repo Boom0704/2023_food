@@ -1,19 +1,25 @@
-import React from 'react';
-import { Routes, Route, Link } from 'react-router-dom'
+import React, { useState } from 'react';
 import ball from '../img/ball.jpeg';
 import "../css/Header.css";
 import "../css/reset.css";
 
-const Header = ( {setSelectPage} ) => (
-    <div className="Header">
+function Header({ setSelectPage }) {
+    const [search, setSearch] = useState("");
+
+    function searchTitle() {
+        setSelectPage("⚧" + search);
+    }
+
+      return (
+        <div className="Header">
         <div className="logo">
             <img src={ball} />
         </div>
         <div>
             <div className="find">
-                <input className='find_input' placeholder="find .." />
+                <input className='find_input' placeholder="find .." onChange={(event) => setSearch(event.target.value)}/>
             </div>
-            <button className='find_btn'>Button</button>
+            <button className='find_btn' onClick={() => {searchTitle()}}>Search</button>
         </div>
         <nav className='nav_bar'>
         <ul>
@@ -27,7 +33,8 @@ const Header = ( {setSelectPage} ) => (
         </ul>
       </nav>
     </div>
-);
+      );
+  }
 
 export default Header;
 

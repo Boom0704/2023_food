@@ -16,7 +16,7 @@ function Writing( {foodType, setSelectPage, loginState} ) {
       const now = new Date();
       const user_id = loginState.id;
       const view = 0;
-      const like = 0;
+      const like = "";
       const nickname = loginState.nickname; 
       const id = now.getTime().toString(); 
       const date = now.toISOString();

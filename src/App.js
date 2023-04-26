@@ -23,6 +23,8 @@ function App({ selectedPage, setSelectPage, loginState, setLoginState }) {
         <MyPage foodType={selectedPage} setSelectPage={setSelectPage} loginState={loginState} setLoginState={setLoginState} />;
         <Category foodType={selectedPage} setSelectPage={setSelectPage} setPost={setPost} loginState={loginState} />;
         </>
+  } else if (selectedPage.charAt(0) === '⚧') {
+    return <Category foodType={selectedPage} setSelectPage={setSelectPage} post={post} loginState={loginState} />; 
   } else {
     return <div>ERROR</div>;
   }

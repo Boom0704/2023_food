@@ -7,17 +7,18 @@ import "./css/Page.css";
 
 function Page( {foodType, setSelectPage, post, loginState} ) {
 
-  //let commentSplit = post.comment.split("🁽🁮");
-  //const parseData = commentSplit.map((cs) => JSON.parse(cs));
+  let commentSplit = post.comment.split("🁽🁮");
+  let parseData = [];
+  if (post.comment !== "") {
+    parseData = commentSplit.map((cs) => JSON.parse(cs));
+  }
 
   const { data, db, setData } = Fire("Post");
   const [ newComment, setNewComment ] = useState("");
 
   const deletePost = async (event) => {
     event.preventDefault();
-
     await deleteDoc(doc(db, "Post", post.id));
-
     setSelectPage("Home");
   }
 
@@ -32,12 +33,42 @@ function Page( {foodType, setSelectPage, post, loginState} ) {
       date : now.toISOString(),
       reComment : []
     }
-
+    
+    parseData.push(dummy);
+    let stringifyData = parseData.map((x)=>JSON.stringify(x)).join("🁽🁮");
     const updateData = {
-      comment: "",
+      comment: stringifyData
     };
     const docRef = doc(db, 'Post', post.id);
     await updateDoc(docRef, updateData);
+    post.comment = stringifyData;
+    setData(post);
+  }
+
+  async function likeUnlike() {
+    let newLike = "";
+
+    if (post.like == "") {  // ㄹㅇ 아이디가 존재하지 않을 때 
+        newLike = "☯"+ loginState.id;
+    } else {
+        if (post.like.includes(loginState.id)) {  // 내 아이디가 존재할 때 
+          let likeSubID = post.like.split("☯").filter((x) => x != loginState.id);
+          likeSubID = likeSubID.filter(x=> x!=="");
+          newLike = likeSubID.join("☯");
+          newLike = "☯" + newLike;
+        } else {  // 내 아이디가 없을 때 
+          newLike = post.like + "☯"+ loginState.id;
+        }
+    }
+    if (newLike === "☯") newLike="";
+    const updateData = {
+      like: newLike
+    };
+
+    const docRef = doc(db, 'Post', post.id);
+    await updateDoc(docRef, updateData);
+    post.like = newLike;
+    setData(post);
   }
 
 
@@ -47,13 +78,13 @@ function Page( {foodType, setSelectPage, post, loginState} ) {
       <span className="mini_info">날짜 : {post.date}</span>
       <span className="mini_info">작성자 : {post.nickname}</span>
       <span className="mini_info">조회수 : {post.view}</span>
-      <span className="mini_info">추천 : {post.like}</span>
+      <span className="mini_info">추천 : {post.like.split("☯").length-1}</span>
       <div>
         <p className="page_content">{post.content}</p>
       </div>
       <div className="btns">
-        <button className="likeBtn">🩵<text>{post.like}</text></button>
-        {(post.nickname === loginState.nickname) ? 
+        <button className="likeBtn" onClick={likeUnlike}>🩵<text>{post.like.split("☯").length-1}</text></button>
+        {(post.user_id === loginState.id) ? 
         <button className="deletePostBtn" onClick={deletePost}>삭제 버튼</button> :
         (loginState.isAdmin) ? <button className="deletePostBtn" onClick={deletePost}>삭제 버튼</button> : <></> }
       </div>
@@ -62,7 +93,7 @@ function Page( {foodType, setSelectPage, post, loginState} ) {
           <input type="text" onChange={(event) => setNewComment(event.target.value)} />
           <button onClick={() => {handleAddComment()}}>입력</button>
         </div>
-        {/* {parseData.map((x) => <Comment x={x} />)} */}
+        {parseData.map((cmt) => <Comment cmt={cmt} post={post} loginState={loginState} parseData={parseData} />)}
       </div>
     </div>
   );

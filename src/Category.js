@@ -1,6 +1,7 @@
 import img_1 from './img/1.jpeg';
 import "./css/Category.css";
 import { useState, useEffect } from 'react';
+import { doc, updateDoc } from 'firebase/firestore';
 import Fire from './Components/Fire';
 
 function Category( {foodType, setSelectPage, setPost, loginState} ) {
@@ -8,6 +9,13 @@ function Category( {foodType, setSelectPage, setPost, loginState} ) {
   
   const Writing_button = () => {
     setSelectPage("Writing");
+  }
+
+  function searchFilterContent(fd) {
+    let searchSplit = foodType.substr(1).split(" ");
+    let searchText = fd.title + " " + fd.content + " " + fd.nickname;
+    let searchBool = searchSplit.map((x) => searchText.includes(x));
+    return searchBool.filter((x) => !x).length === 0 ? true : false ;
   }
 
   const [ currentPage, setCurrentPage ] = useState(1);
@@ -24,6 +32,11 @@ function Category( {foodType, setSelectPage, setPost, loginState} ) {
   if (foodType === "MyPage") {
     slicedData = data.filter((x) => loginState.nickname === x.nickname).slice(startNum, lastNum);
     lastPage = Math.ceil(data.filter((x) => loginState.nickname === x.nickname).length/total_card);
+  } else if (foodType.charAt(0) === '⚧') {
+      let filteredSearch = data.filter((x) => searchFilterContent(x));
+      slicedData = filteredSearch.slice(startNum, lastNum);
+      lastPage = Math.ceil(filteredSearch.length/total_card);
+      // alert(filteredSearch.length);
   }
 
   
@@ -60,13 +73,16 @@ function Category( {foodType, setSelectPage, setPost, loginState} ) {
       <div>
           <div className='writing_btn_p'>
           <h3 className='category_title'> 
-          {(foodType === 'MyPage') ? <span>{loginState.nickname}님의</span> : <span>{foodType}</span>} 게시판</h3>
+          {(foodType === 'MyPage') ? <span>{loginState.nickname}님의</span> :
+           (foodType.charAt(0) === '⚧')  ? foodType.substr(1).split(' ').map(x=> <span>{"\["+ x + "\] "}</span> ) : <span>{foodType}</span>}
+          {(foodType.charAt(0) === '⚧')? " 검색 결과" : " 게시판"}
+           </h3>
           <button className='writing_btn' onClick={Writing_button}>글쓰기</button>
         </div>
         { (foodType === "Home") 
-          ? data.map((card) => <Writing_Card info={card} setSelectPage={setSelectPage} setPost={setPost} />) 
+          ? data.map((card) => <Writing_Card info={card} setSelectPage={setSelectPage} setPost={setPost} db={db} />) 
           : <></> }
-        {slicedData.map((card) => <Writing_Card info={card} setSelectPage={setSelectPage} setPost={setPost} />)} {/* 선택한 음식 종류에 해당하는 게시물만 보여주기 */}
+        {slicedData.map((card) => <Writing_Card info={card} setSelectPage={setSelectPage} setPost={setPost} db={db} />)} {/* 선택한 음식 종류에 해당하는 게시물만 보여주기 */}
           <div>
             <button disabled={currentPage===1} onClick={() => pageMove(currentPage-1)}>{"<"}</button>
             {dataSlice.map((x) => <button onClick={() => pageMove(x)}>{x}</button>)}
@@ -76,9 +92,18 @@ function Category( {foodType, setSelectPage, setPost, loginState} ) {
     );
   }
 
-  function Writing_Card( {info, setSelectPage, setPost} ) {  // info: 게시물 정보
+  function Writing_Card( {info, setSelectPage, setPost, db} ) {  // info: 게시물 정보
+    const docRef = doc(db, 'Post', info.id);
+
+    const updateData = {
+      view: info.view + 1
+    };
+    
+
     return (
-      <div className='card' onClick={() => {
+      <div className='card' onClick={ async () => {
+        await updateDoc(docRef, updateData);
+        info.view = info.view + 1;
         setPost(info);  // info를 post 변수에 저장 
         setSelectPage('Page');  // 글 상세페이지(Page)로 이동! 
       } }> 
@@ -89,7 +114,7 @@ function Category( {foodType, setSelectPage, setPost, loginState} ) {
           <img className='user_profile_img' src={img_1} />
           <div className='icon_like'>
             <span>🩷</span>
-            <span>{info.like}</span>
+            <span>{info.like.split("☯").length-1}</span>
           </div>
           <div className='icon_view'>
             <span>👀</span>
