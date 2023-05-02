@@ -2,16 +2,28 @@ import { useState } from "react";
 import "./css/MyPage.css";
 import Category from "./Category";
 import Fire from "./Components/Fire";
-import { doc, updateDoc } from 'firebase/firestore';
+import { doc, updateDoc, deleteDoc } from 'firebase/firestore';
+import useFirebaseStorage from "./Components/useFirebaseStorage";
 import img_1 from './img/1.jpeg';
 
 function MyPage({setLoginState, loginState, setSelectPage}) {
+  const {data, db} = Fire('User');
+  const { uploadFile } = useFirebaseStorage(); 
+  
   const [password, setPassword] = useState("");
   const [confirm, setConfirm] = useState("");
   const [nickname, setNickname] = useState("");
   const [status, setStatus] = useState("");
 
-  const {data, db} = Fire('User');
+
+  const [pic, setPic] = useState(loginState.picture);
+  const [file, setFile] = useState(null); // file을 저장할 공간
+
+  const handleFileChange = (e) => {
+    setFile(e.target.files[0]);
+    const temp = e.target.files[0];
+    setPic(URL.createObjectURL(temp));
+  }
 
   const docRef = doc(db, 'User', loginState.id);
 
@@ -20,6 +32,17 @@ function MyPage({setLoginState, loginState, setSelectPage}) {
     nickname: loginState.nickname,
     status: loginState.status,
     picture: loginState.picture,
+  };
+
+  const handlePicChange = async (e) => {  // async -> await가 필요할 때 해당 func에 입력 (func이 아니어도 가능)
+    e.preventDefault();
+    let picture = await uploadFile(file);  // await -> 외부 프로그램이랑 통신할 때 (db 혹은 back-end server)
+    updateData.picture = picture;
+    await updateDoc(docRef, updateData);
+
+    loginState.picture = picture;
+    setLoginState(loginState);
+    setSelectPage('Home');
   };
 
 
@@ -71,6 +94,15 @@ function MyPage({setLoginState, loginState, setSelectPage}) {
     }
   };
 
+  async function handleDeleteID() {  // 회원 탈퇴 
+    const confirmChange = window.confirm("진짜 탈퇴할래용? ㅠㅠ");
+    if (confirmChange) {
+      await deleteDoc(doc(db, "User", loginState.id));
+      setLoginState(false);
+      setSelectPage('Home');
+    }   
+  }
+
   return (
     <>
       <div className="MyPage">
@@ -81,9 +113,9 @@ function MyPage({setLoginState, loginState, setSelectPage}) {
           </div>
         <div className="UserInfo_Item">
           <span className="Item_Label">Picture: </span>
-          <img className='user_profile_img' src={img_1} />
-          <input type="file" accept="image/*" />
-          <button type="button" onClick={handleNicknameChange}>변경</button>
+          <img className='profile_img' src={pic} /><br/>
+          <input type="file" accept="image/*" onChange={(e)=>handleFileChange(e)} />
+          <button type="button" onClick={handlePicChange}>변경</button>
         </div>
         <div className="UserInfo_Item">
           <span className="Item_Label">Password: </span>
@@ -103,6 +135,9 @@ function MyPage({setLoginState, loginState, setSelectPage}) {
           <textarea className="Item_Value" onChange={(event) => setStatus(event.target.value)}></textarea>
           <button type="button" onClick={handleStatusChange}>변경</button>
         </div>
+        <div>
+          <button className="forbidden_btn" onClick={handleDeleteID}>회원 탈퇴</button>
+        </div>
       </div>
     </div>
   </>
@@ -112,4 +147,3 @@ function MyPage({setLoginState, loginState, setSelectPage}) {
 export default MyPage;
 
 // 비밀번호, 닉네임 변경
-

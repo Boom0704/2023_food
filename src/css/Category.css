@@ -15,6 +15,24 @@
   margin: 1% 2.5%;
   border-radius: 20px;
   width: 20%;
+  cursor: pointer;
+}
+
+.card:hover img {
+  opacity: 0.8;
+}
+
+/* .card:hover,
+.card-wrapper:hover .card h2,
+.card-wrapper:hover .card .card_info_p,
+.card-wrapper:hover .card .user_profile_img,
+.card-wrapper:hover .card .icon_like,
+.card-wrapper:hover .card .icon_view {
+  background-color: rgb(67, 99, 159);
+} */
+
+.card:hover {
+  background-color: rgb(67, 99, 159);
 }
 
 .preview_img {
@@ -68,4 +86,27 @@
 .writing_btn:hover {
   background-color: #ccc;
   font-weight: bold;
+}
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.pagination-btn {
+  margin: 0 5px;
+  padding: 5px 10px;
+  border: 1px solid #ddd;
+  background-color: #fff;
+  color: #333;
+  cursor: pointer;
+}
+
+.pagination-btn:hover {
+  background-color: #ddd;
+}
+.pagination-btn:disabled {
+  opacity: 0.5;
+  cursor: default;
 }

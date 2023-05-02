@@ -68,7 +68,7 @@ function UserAside( {loginState, setLoginState, setSelectPage} ) {
   const [isOpen, setIsOpen] = useState(false);  // Modal 창 열고 닫기 
 
   const handleOpenModal = () => {
-    setIsOpen(true);
+    setIsOpen(!isOpen);
   }
 
   const handleCloseModal = () => {
@@ -80,6 +80,7 @@ function UserAside( {loginState, setLoginState, setSelectPage} ) {
     <aside>
       <h2 className='loginInfo'>유저 정보</h2>
       <ul>
+        <img className='profile_img' src={loginState.picture} /><br/>
         <li className='userInfo'>아이디: {loginState.userID}</li> <br/>
         <li className='userInfo'>닉네임: {loginState.nickname}</li> <br/>
         <li className='userInfo'>레벨: {loginState.level}</li> <br/>
@@ -89,7 +90,7 @@ function UserAside( {loginState, setLoginState, setSelectPage} ) {
       <button className='logout_btn' onClick={handleLogOut}>로그아웃</button>
       <button className='mypage_btn' onClick={handleMyPage}>마이페이지</button>
       {(loginState.isAdmin === true) 
-      ? <button className='forbidden_btn' onClick={handleOpenModal}>금지 단어</button> 
+      ? <button className='forbidden_btn' onClick={handleOpenModal}>관리자 모드</button> 
       : <></> }
       {isOpen && <Modal handleCloseModal = {handleCloseModal} />}
     </aside>  

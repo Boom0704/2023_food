@@ -10,7 +10,7 @@ function Category( {foodType, setSelectPage, setPost, loginState} ) {
   const Writing_button = () => {
     setSelectPage("Writing");
   }
-
+  
   function searchFilterContent(fd) {
     let searchSplit = foodType.substr(1).split(" ");
     let searchText = fd.title + " " + fd.content + " " + fd.nickname;
@@ -83,11 +83,30 @@ function Category( {foodType, setSelectPage, setPost, loginState} ) {
           ? data.map((card) => <Writing_Card info={card} setSelectPage={setSelectPage} setPost={setPost} db={db} />) 
           : <></> }
         {slicedData.map((card) => <Writing_Card info={card} setSelectPage={setSelectPage} setPost={setPost} db={db} />)} {/* 선택한 음식 종류에 해당하는 게시물만 보여주기 */}
-          <div>
-            <button disabled={currentPage===1} onClick={() => pageMove(currentPage-1)}>{"<"}</button>
-            {dataSlice.map((x) => <button onClick={() => pageMove(x)}>{x}</button>)}
-            <button disabled={currentPage===lastPage} onClick={() => pageMove(currentPage+1)}>{">"}</button>
-          </div>
+        <div className="pagination">
+          <button
+            className="pagination-btn"
+            disabled={currentPage === 1}
+            onClick={() => pageMove(currentPage - 1)}
+          >
+            {"<"}
+          </button>
+          {dataSlice.map((x) => (
+            <button
+              className="pagination-btn"
+              onClick={() => pageMove(x)}
+            >
+              {x}
+            </button>
+          ))}
+          <button
+            className="pagination-btn"
+            disabled={currentPage === lastPage}
+            onClick={() => pageMove(currentPage + 1)}
+          >
+            {">"}
+          </button>
+      </div>
       </div>
     );
   }
@@ -111,7 +130,7 @@ function Category( {foodType, setSelectPage, setPost, loginState} ) {
         <h2>{info.title}</h2>
         <p className='card_info_p'>{info.content}</p>
         <div className='profile__like__view'>
-          <img className='user_profile_img' src={img_1} />
+          <img className='user_profile_img' src={info.picture} />
           <div className='icon_like'>
             <span>🩷</span>
             <span>{info.like.split("☯").length-1}</span>

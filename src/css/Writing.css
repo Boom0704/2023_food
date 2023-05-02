@@ -3,18 +3,18 @@
 }
 
 .Writing {
-  width: 100%;
+  width: 500px;
   margin: 30px 0;
   font-size: 1.2rem;
 }
 
-.title {
+.writing_title_header {
   margin: 0px 30px;
   font-size: 30px;
 }
 
 .writing_title {
-  width: 45%;
+  width: 100%;
   font-size: 25px;
   margin-left: 20px;
 }
@@ -31,12 +31,26 @@ select {
   border-radius: 10px;
 }
 
+.writing_box{
+  border: 2px solid black;
+  margin:  20px 5%;
+  width: 100%;
+}
+
 .writing_textarea {
-  width: 50%;
-  height: 300px;
+  width: 90%;
+  height: auto;
   margin: 30px 30px;
   font-size: 18px;
   resize: none;
+  border: none;
+  outline: none;
+}
+
+.writing_picture{
+  width: 50%;
+  margin: 0px 30px;
+  cursor: not-allowed;
 }
 
 .ok_btn {

@@ -23,7 +23,7 @@ function Comment({cmt, post, loginState, parseData }) {
       content : newComment,
       date : now.toISOString(),
     }
-    cmt.reComment.push(reCmt);
+    cmt.reComment.push(reCmt); 
     let parseReComment = parseData.map((x) => x.id === cmt.id ? cmt : x);
     let stringifyData = parseReComment.map((x)=>JSON.stringify(x)).join("🁽🁮");
     updateComment(stringifyData);
@@ -56,7 +56,7 @@ function Comment({cmt, post, loginState, parseData }) {
 
   return (
   <>
-    <div className="container">
+    <div className="container_comment">
       <span className="nickname">{cmt.nickname} : </span>
       <span className="content">{cmt.content}</span>
       <span className="date">{cmt.date}</span>

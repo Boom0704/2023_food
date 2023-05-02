@@ -2,9 +2,49 @@
   font-family:system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
 }
 
+.Writing {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 50px;
+  width: 50%;
+}
+
+.title {
+  font-size: 20px;
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+}
+
+input[type="file"] {
+  margin-bottom: 10px;
+}
+
+.user_ID, .user_PW, .confirm_PW, .user_nickname, .user_status {
+  margin-left: 10px;
+  width: 100%;
+  font-size: 18px;
+  padding: 5px;
+  border: 1px solid gray;
+  border-radius: 5px;
+  margin-bottom: 2px;
+}
 
 .user_status {
-  width: 250px;
-  font-size: 18px;
   resize: none;
+}
+
+.signUp_ok_btn {
+  padding: 5px 20px;
+  font-size: 18px;
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.signUp_ok_btn:hover {
+  background-color: #3e8e41;
 }

@@ -91,3 +91,9 @@ font-weight: bold;
   color: black;
   font-weight: bold;
   }
+
+  .profile_img{
+    width: 150px;
+    height: 150px;
+    border-radius: 75px;
+  }
