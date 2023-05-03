@@ -14,21 +14,39 @@ function Writing( {foodType, setSelectPage, loginState} ) {
     const [title, setTitle] = useState("");  // 제목 
     const [type, setType] = useState("");  // 음식 타입 - 한식 중식 머시기
     const [content, setContent] = useState("");  // 글쓰는 부분 
-    const [addedContent, setAddedContent] = useState(["1","2","3"]); // 사진123, 글1234 
-    const [addedText, setAddedText] = useState(["","",""]); 
+    const [addedContent, setAddedContent] = useState([{
+      id : "1",
+      address :"https://firebasestorage.googleapis.com/v0/b/inyyfood.appspot.com/o/images%2Faa.jpg?alt=media&token=d8a654ce-cc3c-477a-9e9a-25864918921d",
+      content :"사과"
+      },{
+      id : "2",
+      address :"https://firebasestorage.googleapis.com/v0/b/inyyfood.appspot.com/o/images%2FKakaoTalk_Photo_2023-03-02-18-14-45%20012.jpeg?alt=media&token=fb746066-b736-4252-a85c-808780648bcf",
+      content :"좋아해"
+      },{
+      id : "3",
+      address :"https://firebasestorage.googleapis.com/v0/b/inyyfood.appspot.com/o/images%2FKakaoTalk_Photo_2023-03-02-18-14-45%20006.jpeg?alt=media&token=998e006a-716a-4921-ac88-72d3b6d0cb36",
+      content :"룰루"
+      }]); // 사진123, 글1234 
     const textareaRef = useRef(null);  // 
 
-    function removePic(address) {  // 사진 지우기 
+    function removePic(obj) {  // 사진 지우기   // 다시 설명 
+      let newArr = [];
       const confirmChange = window.confirm("사진 지울래용?");
       if (confirmChange) {
-        if (address === addedContent[0]) {
-          setContent(content + " " + address);
+        if (obj === addedContent[0]) {
+          setContent(content + " " + obj.content);
         } else {
-          let addValue = addedContent.indexOf(address);
-          let newArr = addedContent.map(x=> x == addedContent[addValue-1] ? x + address : x)
-          setAddedContent([...newArr]);
+          let addValue = addedContent.indexOf(obj);
+
+          let newObj = {
+            address: addedContent[addValue-1].address,
+            id: addedContent[addValue-1].id,
+            content: addedContent[addValue-1].content + " " + obj.content
+          }
+          
+          newArr = addedContent.map(x=> x == addedContent[addValue-1] ? newObj : x)
         }
-        setAddedContent([...addedContent.filter((pc) => pc !== address)]);
+        setAddedContent([...newArr.filter((pc) => pc !== obj)]);
       }
     }
 
@@ -99,11 +117,12 @@ function Writing( {foodType, setSelectPage, loginState} ) {
             <div className="previewImg"></div>
             <div className="writing_box">
               <textarea
+              value={content}
               className="writing_textarea"
               placeholder="Input some text."
               onChange={(e) => setContent(e.target.value)}
               ref={textareaRef}></textarea>
-              {addedContent.map((address) => <AddedWriting removePic={removePic} address={address} />)}
+              {addedContent.map((obj) => <AddedWriting removePic={removePic} obj={obj} />)}
             </div>
             <button type="submit" className="ok_btn">OK</button>
           <br />
@@ -113,12 +132,9 @@ function Writing( {foodType, setSelectPage, loginState} ) {
   }
 
 
-  function AddedWriting({removePic, address}) {
+  function AddedWriting({removePic, obj}) {
     const textareaRef = useRef(null); 
-    
-    function handleText(value) {
-      setText(value);
-    }
+  
 
     useEffect(() => {
       if (textareaRef.current) {
@@ -128,12 +144,12 @@ function Writing( {foodType, setSelectPage, loginState} ) {
     
     return (
     <div>
-      <img className="writing_picture" src={img_1} onClick={()=> {removePic(address)}} />
+      <img className="writing_picture" src={obj.address} onClick={()=> {removePic(obj)}} />
       <textarea
-        value={text} // onChange가 아닌 값으로 textarea와 text의 값을 임의로 변경 
+        value={obj.content} // onChange가 아닌 값으로 textarea와 text의 값을 임의로 변경 
         className="writing_textarea"
         placeholder="Input some text."
-        onChange={(e) => setText(e.target.value)}
+        // onChange={(e) => setText(e.target.value)}
         ref={textareaRef}>
       </textarea>
       <span></span>
