@@ -83,8 +83,6 @@ function UserAside( {loginState, setLoginState, setSelectPage} ) {
         <img className='profile_img' src={loginState.picture} /><br/>
         <li className='userInfo'>아이디: {loginState.userID}</li> <br/>
         <li className='userInfo'>닉네임: {loginState.nickname}</li> <br/>
-        <li className='userInfo'>레벨: {loginState.level}</li> <br/>
-        <li className='userInfo'>포인트: {loginState.point}</li> <br/>
         <li className='userInfo'>상세메시지: {loginState.status}</li>
       </ul>
       <button className='logout_btn' onClick={handleLogOut}>로그아웃</button>

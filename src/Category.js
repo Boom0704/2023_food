@@ -1,4 +1,3 @@
-import img_1 from './img/1.jpeg';
 import "./css/Category.css";
 import { useState, useEffect } from 'react';
 import { doc, updateDoc } from 'firebase/firestore';
@@ -30,7 +29,7 @@ function Category( {foodType, setSelectPage, setPost, loginState} ) {
   let lastPage = Math.ceil(data.filter((x) => foodType === x.type).length/total_card);
 
   if (foodType === "MyPage") {
-    slicedData = data.filter((x) => loginState.nickname === x.nickname).slice(startNum, lastNum);
+    slicedData = data.filter((x) => loginState.id === x.user_id).slice(startNum, lastNum);
     lastPage = Math.ceil(data.filter((x) => loginState.nickname === x.nickname).length/total_card);
   } else if (foodType.charAt(0) === '⚧') {
       let filteredSearch = data.filter((x) => searchFilterContent(x));
@@ -113,11 +112,18 @@ function Category( {foodType, setSelectPage, setPost, loginState} ) {
 
   function Writing_Card( {info, setSelectPage, setPost, db} ) {  // info: 게시물 정보
     const docRef = doc(db, 'Post', info.id);
+    const [ profileImg, setProfileImg ] = useState([]);
 
     const updateData = {
       view: info.view + 1
     };
-    
+
+    useEffect(() => {
+      setProfileImg(info.picAdd.split("ㅤ"));
+      if(info.picAdd==""){
+        setProfileImg(["https://firebasestorage.googleapis.com/v0/b/inyyfood.appspot.com/o/images%2F%EC%8A%88%ED%81%AC%EB%A6%BC.jpg?alt=media&token=1493c0f7-b806-4903-af8a-0501c9ca590d"]);
+      }
+    }, []);
 
     return (
       <div className='card' onClick={ async () => {
@@ -125,9 +131,9 @@ function Category( {foodType, setSelectPage, setPost, loginState} ) {
         info.view = info.view + 1;
         setPost(info);  // info를 post 변수에 저장 
         setSelectPage('Page');  // 글 상세페이지(Page)로 이동! 
-      } }> 
-        <img className='preview_img' src={img_1} />
-        <h2>{info.title}</h2>
+      } }>
+        <img className='preview_img' src={profileImg} />
+        <h2 className="Writing_Card_title">{info.title}</h2>
         <p className='card_info_p'>{info.content}</p>
         <div className='profile__like__view'>
           <img className='user_profile_img' src={info.picture} />

@@ -1,5 +1,5 @@
 import Comment from "./Components/Comment";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { doc, deleteDoc, updateDoc } from "firebase/firestore";
 import Fire from "./Components/Fire"; // Firestore 객체 가져오기
 import "./css/Page.css";
@@ -8,6 +8,11 @@ import "./css/Page.css";
 function Page( {foodType, setSelectPage, post, loginState} ) {
 
   let commentSplit = post.comment.split("🁽🁮");
+  let contentSplit = post.content.split("ㅤ");
+  let picAddSplit = post.picAdd.split("ㅤ");
+  let arr = picAddSplit.map(x=>picAddSplit.indexOf(x));
+
+
   let parseData = [];
   if (post.comment !== "") {
     parseData = commentSplit.map((cs) => JSON.parse(cs));
@@ -22,7 +27,14 @@ function Page( {foodType, setSelectPage, post, loginState} ) {
     setSelectPage("Home");
   }
 
-
+  function draw(x){
+    return (
+      <div>
+        <img className="writing_picture" src={picAddSplit[x]} />
+        <p className="page_content">{contentSplit[x+1]}</p>
+      </div>
+    );
+  }
   async function handleAddComment() {  // 외부데이터는 다 async 
     const now = new Date();
     let dummy = {
@@ -44,6 +56,7 @@ function Page( {foodType, setSelectPage, post, loginState} ) {
     post.comment = stringifyData;
     setData(post);
   }
+
 
   async function likeUnlike() {
     let newLike = "";
@@ -80,7 +93,8 @@ function Page( {foodType, setSelectPage, post, loginState} ) {
       <span className="mini_info">조회수 : {post.view}</span>
       <span className="mini_info">추천 : {post.like.split("☯").length-1}</span>
       <div>
-        <p className="page_content">{post.content}</p>
+        <p className="page_content">{contentSplit[0]}</p>
+        {arr.map(x=>draw(x))}
       </div>
       <div className="btns">
         <button className="likeBtn" onClick={likeUnlike}>🩵<text>{post.like.split("☯").length-1}</text></button>

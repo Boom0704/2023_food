@@ -14,23 +14,12 @@ function Writing( {foodType, setSelectPage, loginState} ) {
     const [title, setTitle] = useState("");  // 제목 
     const [type, setType] = useState("");  // 음식 타입 - 한식 중식 머시기
     const [content, setContent] = useState("");  // 글쓰는 부분 
-    const [addedContent, setAddedContent] = useState([{
-      id : "1",
-      address :"https://firebasestorage.googleapis.com/v0/b/inyyfood.appspot.com/o/images%2Faa.jpg?alt=media&token=d8a654ce-cc3c-477a-9e9a-25864918921d",
-      content :"사과"
-      },{
-      id : "2",
-      address :"https://firebasestorage.googleapis.com/v0/b/inyyfood.appspot.com/o/images%2FKakaoTalk_Photo_2023-03-02-18-14-45%20012.jpeg?alt=media&token=fb746066-b736-4252-a85c-808780648bcf",
-      content :"좋아해"
-      },{
-      id : "3",
-      address :"https://firebasestorage.googleapis.com/v0/b/inyyfood.appspot.com/o/images%2FKakaoTalk_Photo_2023-03-02-18-14-45%20006.jpeg?alt=media&token=998e006a-716a-4921-ac88-72d3b6d0cb36",
-      content :"룰루"
-      }]); // 사진123, 글1234 
+    const [addedContent, setAddedContent] = useState([]); // 사진123, 글1234 
     const textareaRef = useRef(null);  // 
+    const [file, setFile] = useState(null); // file을 저장할 공간
 
-    function removePic(obj) {  // 사진 지우기   // 다시 설명 
-      let newArr = [];
+    function removePic(obj) {  // 사진 지우기   
+      let newArr = [...addedContent];  // 깊은 복사 (... 쪼개기 -> 주소를 가져와서 쪼갬)
       const confirmChange = window.confirm("사진 지울래용?");
       if (confirmChange) {
         if (obj === addedContent[0]) {
@@ -79,8 +68,24 @@ function Writing( {foodType, setSelectPage, loginState} ) {
       } else if (titleContent.length !== 0) {
         alert( titleContent.join(', ') + " 나쁜말! 🤬");
       } else {
-        try {
-          await setDoc(doc(db, 'Post', id), { id, title, content, like, type, view, nickname, date, picture, comment, user_id });
+        try
+        {
+          let total = content;
+          let picAdd = "";
+          for(let i=0; i<addedContent.length; i++){
+            total += "ㅤ" + addedContent[i].content;
+          }
+          for(let i=0; i<addedContent.length; i++){
+            let tempPic = await uploadFile(addedContent[i].uploadPic);
+            
+            if(picAdd==""){
+              picAdd = tempPic;
+            }
+            else{
+              picAdd += "ㅤ" + tempPic;
+            }
+          }
+          await setDoc(doc(db, 'Post', id), { id, title, content:total, like, type, view, nickname, date, picture, comment, user_id, picAdd});
             setSelectPage(type);
         } catch (error) {
           console.log("아이디" + loginState.nicknames);
@@ -90,9 +95,19 @@ function Writing( {foodType, setSelectPage, loginState} ) {
       }
     }
 
-    const handleAddPic = () => {
-      // 나머지 코드
-      alert("더ㅜㅐㅣㅑ");
+    const handleAddPic = (e) => {
+      setFile(e.target.files[0]);
+      const temp = e.target.files[0];
+      let url = (URL.createObjectURL(temp));
+      const now = new Date();
+      const newPic = {
+        id : now.getTime().toString(),
+        address : url,
+        content : "",
+        uploadPic : e.target.files[0]
+      }
+
+      setAddedContent([...addedContent, newPic]);
     }
 
 
@@ -113,7 +128,7 @@ function Writing( {foodType, setSelectPage, loginState} ) {
               <option value="Dessert">디저트</option>
             </select>
 
-            <input type="file" accept="image/*" onInput={() => {handleAddPic();}}/>
+            <input type="file" accept="image/*" onChange={(e) => {handleAddPic(e);}}/>
             <div className="previewImg"></div>
             <div className="writing_box">
               <textarea
@@ -122,7 +137,7 @@ function Writing( {foodType, setSelectPage, loginState} ) {
               placeholder="Input some text."
               onChange={(e) => setContent(e.target.value)}
               ref={textareaRef}></textarea>
-              {addedContent.map((obj) => <AddedWriting removePic={removePic} obj={obj} />)}
+              {addedContent.map((obj) => <AddedWriting removePic={removePic} obj={obj} addedContent={addedContent} setAddedContent={setAddedContent} file ={file} />)}
             </div>
             <button type="submit" className="ok_btn">OK</button>
           <br />
@@ -131,10 +146,20 @@ function Writing( {foodType, setSelectPage, loginState} ) {
     );
   }
 
-
-  function AddedWriting({removePic, obj}) {
+  function AddedWriting({removePic, obj, addedContent, setAddedContent, file}) {
     const textareaRef = useRef(null); 
-  
+    
+    function onChangeText(e){
+
+      let newObj = {
+        address: obj.address,
+        id: obj.id,
+        uploadPic: obj.uploadPic,
+        content: e.target.value
+      }
+      let newArr = addedContent.map(x=> x == obj ? newObj : x);
+      setAddedContent([...newArr]);
+    }  
 
     useEffect(() => {
       if (textareaRef.current) {
@@ -149,15 +174,11 @@ function Writing( {foodType, setSelectPage, loginState} ) {
         value={obj.content} // onChange가 아닌 값으로 textarea와 text의 값을 임의로 변경 
         className="writing_textarea"
         placeholder="Input some text."
-        // onChange={(e) => setText(e.target.value)}
+        onChange={(e) => {onChangeText(e)}}
         ref={textareaRef}>
       </textarea>
-      <span></span>
-
     </div>
     );
   }
-
   
   export default Writing;
-  

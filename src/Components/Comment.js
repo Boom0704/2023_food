@@ -82,8 +82,8 @@ function Comment({cmt, post, loginState, parseData }) {
 function ReComment({cmt2, DeleteReComment, loginState}) {
 
   return (
-    <div className="container">
-      <span className="ㄴ">ㄴ</span>
+    <div className="container_comment">
+      <span className="ㄴ">◡̈♥</span>
       <span className="nickname">{cmt2.nickname} : </span>
       <span className="content">{cmt2.content}</span>
       <span className="date">{cmt2.date}</span>

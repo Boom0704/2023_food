@@ -21,7 +21,7 @@ function Modal({ handleCloseModal }) {
   }
 
   return(
-  <div className='container'>
+  <div className='container_modal'>
     <h2 className='modalTitle'>금지 단어</h2>
     <div className='constructor'>
     <input className='forbidden_input' type="text" onChange={(event) => setWord(event.target.value)}></input>

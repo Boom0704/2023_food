@@ -27,7 +27,7 @@ function SignUp( {foodType, setSelectPage} ) {
     e.preventDefault();
     const now = new Date();
     const level = 1;
-    let picture = "사진 주소";
+    let picture = "https://firebasestorage.googleapis.com/v0/b/inyyfood.appspot.com/o/images%2Fbasic.jpg?alt=media&token=5af8e39f-1555-41d9-80fd-92d283f61e24";
     const id = now.getTime().toString();  
     const point = 0; 
     const isAdmin = false;  // 관리자 

@@ -22,14 +22,11 @@
   opacity: 0.8;
 }
 
-/* .card:hover,
-.card-wrapper:hover .card h2,
-.card-wrapper:hover .card .card_info_p,
-.card-wrapper:hover .card .user_profile_img,
-.card-wrapper:hover .card .icon_like,
-.card-wrapper:hover .card .icon_view {
-  background-color: rgb(67, 99, 159);
-} */
+.Writing_Card_title{
+  font-size: 20px;
+  font-weight: bold;
+  padding: 5px;
+}
 
 .card:hover {
   background-color: rgb(67, 99, 159);
@@ -63,6 +60,7 @@
     overflow: hidden;
     text-overflow: ellipsis;
     width: 100%;
+    padding: 5px;
 }
 
 .writing_btn_p{
