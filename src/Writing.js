@@ -1,4 +1,3 @@
-import img_1 from './img/1.jpeg';
 import { useState, useEffect, useRef } from "react";
 import "./css/Writing.css";
 import Fire from "./Components/Fire";
@@ -43,7 +42,7 @@ function Writing( {foodType, setSelectPage, loginState} ) {
       if (textareaRef.current) {
         autosize(textareaRef.current);
       }
-    }, []);
+    }, []);  // next ... 
 
     const handleWritingSubmit = async (e) => {
       e.preventDefault();
@@ -72,16 +71,16 @@ function Writing( {foodType, setSelectPage, loginState} ) {
         {
           let total = content;
           let picAdd = "";
-          for(let i=0; i<addedContent.length; i++){
+          for (let i=0; i<addedContent.length; i++) {
             total += "ㅤ" + addedContent[i].content;
           }
-          for(let i=0; i<addedContent.length; i++){
+          for (let i=0; i<addedContent.length; i++) {
             let tempPic = await uploadFile(addedContent[i].uploadPic);
             
-            if(picAdd==""){
+            if (picAdd == "") {
               picAdd = tempPic;
             }
-            else{
+            else {
               picAdd += "ㅤ" + tempPic;
             }
           }
@@ -104,7 +103,7 @@ function Writing( {foodType, setSelectPage, loginState} ) {
         id : now.getTime().toString(),
         address : url,
         content : "",
-        uploadPic : e.target.files[0]
+        uploadPic : e.target.files[0]  // mypage 참고
       }
 
       setAddedContent([...addedContent, newPic]);
@@ -163,7 +162,7 @@ function Writing( {foodType, setSelectPage, loginState} ) {
 
     useEffect(() => {
       if (textareaRef.current) {
-        autosize(textareaRef.current);
+        autosize(textareaRef.current);  // npm autisuze download -> textarea 크기 자동으로 늘려줌 
       }
     }, []);
     

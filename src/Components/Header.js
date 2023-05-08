@@ -13,7 +13,7 @@ function Header({ setSelectPage }) {
       return (
         <div className="Header">
         <div className="logo">
-            <img src={ball} />
+            <img src={ball} onClick={() => {setSelectPage('Home')}} />
         </div>
         <div>
             <div className="find">
@@ -29,7 +29,6 @@ function Header({ setSelectPage }) {
           <li><a href="#" onClick={() => setSelectPage('Western')}>양식</a></li>
           <li><a href="#" onClick={() => setSelectPage('Japan')}>일식</a></li>
           <li><a href="#" onClick={() => setSelectPage('Dessert')}>디저트</a></li>
-          <li><a href="#" onClick={() => setSelectPage('Writing')}>글쓰기</a></li>
         </ul>
       </nav>
     </div>

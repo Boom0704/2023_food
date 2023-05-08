@@ -26,17 +26,15 @@ function SignUp( {foodType, setSelectPage} ) {
   const handleSignUpSubmit = async (e) => {
     e.preventDefault();
     const now = new Date();
-    const level = 1;
     let picture = "https://firebasestorage.googleapis.com/v0/b/inyyfood.appspot.com/o/images%2Fbasic.jpg?alt=media&token=5af8e39f-1555-41d9-80fd-92d283f61e24";
     const id = now.getTime().toString();  
-    const point = 0; 
     const isAdmin = false;  // 관리자 
 
     if ( userID === "" || password === "" || nickname === "" || confirm === "") {
       alert("모두 입력해주세용."); 
     } else if (data.filter((x) => x.userID === userID).length !== 0) {  // ID 중복 방지 
       alert("이미 존재하는 ID래! 이건 못해 ㅠㅠ");
-    } else if (data.filter((x) => x.nickname === nickname).length!== 0) {  // 닉네임 중복 방지 
+    } else if (data.filter((x) => x.nickname === nickname).length !== 0) {  // 닉네임 중복 방지 
       alert("이미 존재하는 닉네임이래! 이건 못해");
     } else if (password !== confirm) {
       alert("비밀번호가 안 맞아요!!!");
@@ -45,7 +43,7 @@ function SignUp( {foodType, setSelectPage} ) {
         if (file) {
           picture = await uploadFile(file);
         }
-        await setDoc(doc(db, 'User', id), { id, level, nickname, password, picture, point, status, userID, isAdmin });
+        await setDoc(doc(db, 'User', id), { id, nickname, password, picture, status, userID, isAdmin });
         setSelectPage("Home");
       } catch (error) {
         console.error(error);

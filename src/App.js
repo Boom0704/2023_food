@@ -8,7 +8,7 @@ import { useState } from "react";
 function App({ selectedPage, setSelectPage, loginState, setLoginState }) {
 
   const header_foodtype = ["Korean", "Chinese", "Japan", "Western", "Dessert", "Home"];
-  const [post, setPost] = useState(null);  // 개시물 
+  const [post, setPost] = useState(null);  // 게시물 
 
   if (header_foodtype.includes(selectedPage)) { 
     return <Category foodType={selectedPage} setSelectPage={setSelectPage} setPost={setPost} loginState={loginState} />;

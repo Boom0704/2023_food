@@ -10,12 +10,12 @@ function Page( {foodType, setSelectPage, post, loginState} ) {
   let commentSplit = post.comment.split("🁽🁮");
   let contentSplit = post.content.split("ㅤ");
   let picAddSplit = post.picAdd.split("ㅤ");
-  let arr = picAddSplit.map(x=>picAddSplit.indexOf(x));
+  let arr = picAddSplit.map(x => picAddSplit.indexOf(x));
 
 
   let parseData = [];
   if (post.comment !== "") {
-    parseData = commentSplit.map((cs) => JSON.parse(cs));
+    parseData = commentSplit.map((cs) => JSON.parse(cs));  // object를 문자열로 바꾼 형태의 문자열을 다시 object 형태로 만들고 분해해서 parseData에 저장 
   }
 
   const { data, db, setData } = Fire("Post");
@@ -27,7 +27,7 @@ function Page( {foodType, setSelectPage, post, loginState} ) {
     setSelectPage("Home");
   }
 
-  function draw(x){
+  function draw(x) {
     return (
       <div>
         <img className="writing_picture" src={picAddSplit[x]} />
@@ -35,6 +35,7 @@ function Page( {foodType, setSelectPage, post, loginState} ) {
       </div>
     );
   }
+
   async function handleAddComment() {  // 외부데이터는 다 async 
     const now = new Date();
     let dummy = {
@@ -47,7 +48,7 @@ function Page( {foodType, setSelectPage, post, loginState} ) {
     }
     
     parseData.push(dummy);
-    let stringifyData = parseData.map((x)=>JSON.stringify(x)).join("🁽🁮");
+    let stringifyData = parseData.map((x)=>JSON.stringify(x)).join("🁽🁮");  // object를 문자열로 변환 (firebase에 저장하기 위해서)
     const updateData = {
       comment: stringifyData
     };
@@ -55,6 +56,7 @@ function Page( {foodType, setSelectPage, post, loginState} ) {
     await updateDoc(docRef, updateData);
     post.comment = stringifyData;
     setData(post);
+    setNewComment("");
   }
 
 
@@ -97,16 +99,19 @@ function Page( {foodType, setSelectPage, post, loginState} ) {
         {arr.map(x=>draw(x))}
       </div>
       <div className="btns">
-        <button className="likeBtn" onClick={likeUnlike}>🩵<text>{post.like.split("☯").length-1}</text></button>
+        {loginState == false ? <></> : 
+          <button className="likeBtn" onClick={likeUnlike}>🩵<text>{post.like.split("☯").length-1}</text></button>
+        }
         {(post.user_id === loginState.id) ? 
         <button className="deletePostBtn" onClick={deletePost}>삭제 버튼</button> :
         (loginState.isAdmin) ? <button className="deletePostBtn" onClick={deletePost}>삭제 버튼</button> : <></> }
       </div>
       <div className="comment">
-        <div>
-          <input type="text" onChange={(event) => setNewComment(event.target.value)} />
-          <button onClick={() => {handleAddComment()}}>입력</button>
-        </div>
+        {loginState == false ? <></> : 
+          <div>
+            <input type="text" onChange={(event) => setNewComment(event.target.value)} value={newComment} />
+            <button onClick={() => {handleAddComment()}}>입력</button>
+          </div>}
         {parseData.map((cmt) => <Comment cmt={cmt} post={post} loginState={loginState} parseData={parseData} />)}
       </div>
     </div>

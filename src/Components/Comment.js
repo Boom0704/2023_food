@@ -27,6 +27,7 @@ function Comment({cmt, post, loginState, parseData }) {
     let parseReComment = parseData.map((x) => x.id === cmt.id ? cmt : x);
     let stringifyData = parseReComment.map((x)=>JSON.stringify(x)).join("🁽🁮");
     updateComment(stringifyData);
+    setNewComment("");
   }
 
   function DeleteReComment(cmt2) {  
@@ -60,16 +61,17 @@ function Comment({cmt, post, loginState, parseData }) {
       <span className="nickname">{cmt.nickname} : </span>
       <span className="content">{cmt.content}</span>
       <span className="date">{cmt.date}</span>
-      <button className="replyBtn" onClick={() => {handleOpenClose()}}>💬</button>
+      {loginState == false ? <></> : <button className="replyBtn" onClick={() => {handleOpenClose()}}>💬</button>
+}
       {(cmt.user_id === loginState.id) ? 
         <button className="deleteBtn" onClick={() => {DeleteComment()}}>❌</button> :
-        (loginState.Admin) ? <button className="deleteBtn" onClick={() => {DeleteComment()}}>❌</button> : <></> }
+        (loginState.isAdmin) ? <button className="deleteBtn" onClick={() => {DeleteComment()}}>❌</button> : <></> }
 
     </div>
       {isOpen && 
        <div>
         <span className="ㄴ">ㄴ</span>
-        <input type="text" onChange={(event) => setNewComment(event.target.value)} />
+        <input type="text" onChange={(event) => setNewComment(event.target.value)} value={newComment} />
         <button onClick={() => {AddReComment()}}>입력</button>
       </div> }
 
@@ -89,7 +91,7 @@ function ReComment({cmt2, DeleteReComment, loginState}) {
       <span className="date">{cmt2.date}</span>
       {(cmt2.user_id === loginState.id) ? 
         <button className="deleteBtn" onClick={() => {DeleteReComment(cmt2)}}>❌</button> :
-        (loginState.Admin) ? <button className="deleteBtn" onClick={() => {DeleteReComment(cmt2)}}>❌</button> : <></> }
+        (loginState.isAdmin) ? <button className="deleteBtn" onClick={() => {DeleteReComment(cmt2)}}>❌</button> : <></> }
     </div>
     );
 }

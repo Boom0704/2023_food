@@ -71,13 +71,13 @@ function Category( {foodType, setSelectPage, setPost, loginState} ) {
   return (
       <div>
           <div className='writing_btn_p'>
-          <h3 className='category_title'> 
-          {(foodType === 'MyPage') ? <span>{loginState.nickname}님의</span> :
-           (foodType.charAt(0) === '⚧')  ? foodType.substr(1).split(' ').map(x=> <span>{"\["+ x + "\] "}</span> ) : <span>{foodType}</span>}
-          {(foodType.charAt(0) === '⚧')? " 검색 결과" : " 게시판"}
-           </h3>
-          <button className='writing_btn' onClick={Writing_button}>글쓰기</button>
-        </div>
+            <h3 className='category_title'> 
+            {(foodType === 'MyPage') ? <span>{loginState.nickname}님의</span> :
+            (foodType.charAt(0) === '⚧')  ? foodType.substr(1).split(' ').map(x=> <span>{"\["+ x + "\] "}</span> ) : <span>{foodType}</span>}
+            {(foodType.charAt(0) === '⚧') ? " 검색 결과" : " 게시판"}
+            </h3>
+            {loginState == false ? <></> : <button className='writing_btn' onClick={Writing_button}>글쓰기</button>}
+      </div>
         { (foodType === "Home") 
           ? data.map((card) => <Writing_Card info={card} setSelectPage={setSelectPage} setPost={setPost} db={db} />) 
           : <></> }
@@ -120,7 +120,7 @@ function Category( {foodType, setSelectPage, setPost, loginState} ) {
 
     useEffect(() => {
       setProfileImg(info.picAdd.split("ㅤ"));
-      if(info.picAdd==""){
+      if (info.picAdd == "") {
         setProfileImg(["https://firebasestorage.googleapis.com/v0/b/inyyfood.appspot.com/o/images%2F%EC%8A%88%ED%81%AC%EB%A6%BC.jpg?alt=media&token=1493c0f7-b806-4903-af8a-0501c9ca590d"]);
       }
     }, []);
@@ -131,7 +131,7 @@ function Category( {foodType, setSelectPage, setPost, loginState} ) {
         info.view = info.view + 1;
         setPost(info);  // info를 post 변수에 저장 
         setSelectPage('Page');  // 글 상세페이지(Page)로 이동! 
-      } }>
+      } }> 
         <img className='preview_img' src={profileImg} />
         <h2 className="Writing_Card_title">{info.title}</h2>
         <p className='card_info_p'>{info.content}</p>

@@ -10,11 +10,10 @@ function Root() {
   const [loginState, setLoginState] = useState(false);
   
   return (
-    <BrowserRouter>
+    <BrowserRouter>  
       <Header setSelectPage={setSelectPage} />
       <Aside loginState={loginState} setLoginState={setLoginState} setSelectPage={setSelectPage} />  {/* 로그인 상태 변경 함수 */}
       <App selectedPage={selectedPage} setSelectPage={setSelectPage} loginState={loginState} setLoginState={setLoginState} /> {/* 페이지 이동 */}
-    
     </BrowserRouter>
   );
 }

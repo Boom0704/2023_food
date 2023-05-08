@@ -1,8 +1,6 @@
 import React, { useState } from 'react';
 import "../css/Aside.css";
-import SignUp from '../SignUp';
 import Fire from './Fire';
-import MyPage from '../MyPage';
 import Modal from './Modal';
 
 function LoginAside({ setLoginState, setSelectPage }) {
@@ -22,7 +20,6 @@ function LoginAside({ setLoginState, setSelectPage }) {
       }
       
     } catch (error) {
-      console.log('로그인 실패ss');
       alert('로그인에 실패했습니다.');
     }
   }
@@ -58,6 +55,7 @@ function UserAside( {loginState, setLoginState, setSelectPage} ) {
   const handleLogOut = (event) => {
     event.preventDefault();
     setLoginState(false);
+    setSelectPage('Home');
   }
 
   const handleMyPage = (event) => {
@@ -87,9 +85,7 @@ function UserAside( {loginState, setLoginState, setSelectPage} ) {
       </ul>
       <button className='logout_btn' onClick={handleLogOut}>로그아웃</button>
       <button className='mypage_btn' onClick={handleMyPage}>마이페이지</button>
-      {(loginState.isAdmin === true) 
-      ? <button className='forbidden_btn' onClick={handleOpenModal}>관리자 모드</button> 
-      : <></> }
+      {(loginState.isAdmin) && <button className='forbidden_btn' onClick={handleOpenModal}>관리자 모드</button> }
       {isOpen && <Modal handleCloseModal = {handleCloseModal} />}
     </aside>  
   );
